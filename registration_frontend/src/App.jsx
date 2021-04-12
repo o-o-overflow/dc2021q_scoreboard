@@ -8,7 +8,7 @@ function App() {
     <div>
       <header>
         <div className="container">
-          <a href="http://www.oooverflow.io/">
+          <a href="https://oooverflow.io/">
             <img
               alt="OOO logo"
               src={process.env.PUBLIC_URL + "ooo-logo-175.png"}

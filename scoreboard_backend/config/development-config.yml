@@ -1,5 +1,5 @@
-securityGroupId: sg-099bb5ca9f6174c58
+securityGroupId: sg-0da7c11ca312e047e
 subnetIds:
-  - subnet-0401c46bc3ac64087
-  - subnet-09e9ccdcdd51941c5
-  - subnet-023878b12e829e973
+  - subnet-0267e1a6dddfcc7b6
+  - subnet-0c53f64b1b3e3e95e
+  - subnet-0c712aab819623600

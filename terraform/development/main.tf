@@ -7,7 +7,7 @@ module processor {
 
 terraform {
   backend "s3" {
-    bucket         = "ooo.terraform"
+    bucket         = "ooo.terraform.v1"
     dynamodb_table = "terraform"
     key            = "scoreboard-development.tfstate"
     profile        = "ooo"

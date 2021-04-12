@@ -11,6 +11,12 @@ provider "aws" {
   version = "~> 2.13"
 }
 
+data "archive_file" "auth" {
+  output_path = "/tmp/http_auth.zip"
+  source_file = "${path.module}/index.js"
+  type        = "zip"
+}
+
 data "aws_acm_certificate" "register" {
   domain   = "register.oooverflow.io"
   provider = aws.us-east-1
@@ -19,10 +25,21 @@ data "aws_acm_certificate" "register" {
 }
 
 data "aws_acm_certificate" "scoreboard" {
-  domain   = "scoreboard.oooverflow.io"
+  domain   = "scoreboard.ooo"
   provider = aws.us-east-1
   statuses = ["ISSUED"]
   types    = ["AMAZON_ISSUED"]
+}
+
+data "aws_iam_policy_document" "lambda-assume-role-policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["edgelambda.amazonaws.com", "lambda.amazonaws.com"]
+    }
+  }
 }
 
 data "aws_iam_policy_document" "oai-read-bucket" {
@@ -34,13 +51,6 @@ data "aws_iam_policy_document" "oai-read-bucket" {
     }
     resources = ["${aws_s3_bucket.frontend.arn}/*"]
   }
-}
-
-data "aws_lambda_function" "auth" {
-  count         = var.environment == "development" ? 1 : 0
-  function_name = "HTTP-Basic-Auth"
-  provider      = aws.us-east-1
-  qualifier     = 4
 }
 
 data "aws_route53_zone" "ooo" {
@@ -63,7 +73,7 @@ resource "aws_cloudfront_distribution" "registration-development" {
     }
     lambda_function_association {
       event_type   = "viewer-request"
-      lambda_arn   = data.aws_lambda_function.auth[count.index].qualified_arn
+      lambda_arn   = aws_lambda_function.auth[count.index].qualified_arn
       include_body = false
     }
     viewer_protocol_policy = "redirect-to-https"
@@ -149,7 +159,7 @@ resource "aws_cloudfront_distribution" "scoreboard-development" {
     }
     lambda_function_association {
       event_type   = "viewer-request"
-      lambda_arn   = data.aws_lambda_function.auth[count.index].qualified_arn
+      lambda_arn   = aws_lambda_function.auth[count.index].qualified_arn
       include_body = false
     }
     viewer_protocol_policy = "redirect-to-https"
@@ -180,7 +190,7 @@ resource "aws_cloudfront_distribution" "scoreboard-development" {
 resource "aws_cloudfront_distribution" "scoreboard-production" {
   count = var.environment == "development" ? 0 : 1
 
-  aliases = ["scoreboard.oooverflow.io"]
+  aliases = ["scoreboard.ooo"]
   comment = "scoreboard"
   default_cache_behavior {
     allowed_methods = ["GET", "HEAD"]
@@ -257,6 +267,13 @@ resource "aws_eip" "eip" {
   vpc        = true
 }
 
+resource "aws_iam_role" "lambda-http-auth" {
+  assume_role_policy = data.aws_iam_policy_document.lambda-assume-role-policy.json
+  count              = var.environment == "development" ? 1 : 0
+  name               = "instance_role"
+  path               = "/service-role/"
+}
+
 resource "aws_instance" "util" {
   ami                         = "ami-0b59bfac6be064b78"
   associate_public_ip_address = true
@@ -273,6 +290,18 @@ resource "aws_instance" "util" {
 resource "aws_internet_gateway" "gateway" {
   tags   = { Name = "scoreboard-${var.environment}" }
   vpc_id = aws_vpc.vpc.id
+}
+
+resource "aws_lambda_function" "auth" {
+  count            = var.environment == "development" ? 1 : 0
+  filename         = data.archive_file.auth.output_path
+  function_name    = "edge-http-basic-auth"
+  handler          = "index.handler"
+  provider         = aws.us-east-1
+  publish          = true
+  role             = aws_iam_role.lambda-http-auth[count.index].arn
+  runtime          = "nodejs10.x"
+  source_code_hash = data.archive_file.auth.output_base64sha256
 }
 
 resource "aws_nat_gateway" "gateway" {
@@ -367,7 +396,7 @@ resource "aws_route_table_association" "public" {
 
 resource "aws_s3_bucket" "frontend" {
   acl           = "private"
-  bucket        = "ooodc2020q-scoreboard-${var.environment}"
+  bucket        = "ooo-scoreboard-${var.environment}"
   force_destroy = false
 }
 

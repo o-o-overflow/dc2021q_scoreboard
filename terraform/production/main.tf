@@ -3,7 +3,7 @@ variable "jwt_secret" {}
 
 module processor {
   aws_nat_gateways  = 2
-  db_instance_class = "db.t3.micro" # "db.m5.large"
+  db_instance_class = "db.t3.micro" # "db.m6g.large"
   db_password       = var.db_password
   environment       = "production"
   jwt_secret        = var.jwt_secret
@@ -12,10 +12,11 @@ module processor {
 
 terraform {
   backend "s3" {
-    bucket         = "ooo.terraform"
+    bucket         = "ooo.terraform.v1"
     dynamodb_table = "terraform"
     key            = "scoreboard-production.tfstate"
     profile        = "ooo"
     region         = "us-east-2"
+
   }
 }

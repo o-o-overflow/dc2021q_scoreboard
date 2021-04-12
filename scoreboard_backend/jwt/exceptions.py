@@ -1,4 +1,12 @@
-class InvalidTokenError(Exception):
+class PyJWTError(Exception):
+    """
+    Base class for all exceptions
+    """
+
+    pass
+
+
+class InvalidTokenError(PyJWTError):
     pass
 
 
@@ -30,7 +38,7 @@ class ImmatureSignatureError(InvalidTokenError):
     pass
 
 
-class InvalidKeyError(Exception):
+class InvalidKeyError(PyJWTError):
     pass
 
 
@@ -46,7 +54,13 @@ class MissingRequiredClaimError(InvalidTokenError):
         return 'Token is missing the "%s" claim' % self.claim
 
 
-# Compatibility aliases (deprecated)
-ExpiredSignature = ExpiredSignatureError
-InvalidAudience = InvalidAudienceError
-InvalidIssuer = InvalidIssuerError
+class PyJWKError(PyJWTError):
+    pass
+
+
+class PyJWKSetError(PyJWTError):
+    pass
+
+
+class PyJWKClientError(PyJWTError):
+    pass

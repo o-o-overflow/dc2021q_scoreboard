@@ -76,7 +76,7 @@ class Registration extends React.Component {
         status: "computing proof of work",
       });
       this.worker.postMessage({
-        prefix: "012345",
+        prefix: "00ff00",
         value: `${this.state.email}!${this.hashTimestamp}`,
       });
       return;

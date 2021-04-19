@@ -3,10 +3,14 @@ import exact from "prop-types-exact";
 import React from "react";
 
 function Challenge(props) {
-  const { id, points, solved, tags, item_index } = props;
+  const { authenticated, id, points, solved, tags, item_index } = props;
 
-  let onClick = () => props.onClick(props);
+  let onClick = null;
   let classes = "challenge";
+  if (authenticated) {
+    classes += " challenge-authenticated";
+    onClick = () => props.onClick(props);
+  }
 
   var styles;
   if (solved) {
@@ -47,6 +51,7 @@ function Challenge(props) {
   );
 }
 Challenge.propTypes = exact({
+  authenticated: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   points: PropTypes.number.isRequired,

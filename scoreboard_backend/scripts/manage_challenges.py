@@ -59,8 +59,8 @@ class CommandHandler:
 
     def _run_command(self, *sls_arguments):
         process = subprocess.run(
-            ["sls", "invoke", "--stage", self.environment, "-lf", *sls_arguments],
-            cwd=os.path.dirname(__file__),
+            ["sls", "invoke", "--stage", self.environment, "-l", "-f", *sls_arguments],
+            cwd=os.path.join(os.path.dirname(__file__),".."),
         )
         return process.returncode
 
@@ -71,7 +71,8 @@ def main():
             os.path.dirname(__file__),
             "..",
             "..",
-            "dc2020q-chalmanager",
+            "..",
+            "chalmanager",
             "scoreboard.json",
         )
     )

@@ -11,5 +11,5 @@ else
     stage=$STAGE
 fi
 
-sls invoke -lf user_reset_password -d "{\"email\": \"$1\", \"password\": \"$2\"}" --stage $stage
+sls invoke -f user_reset_password -d "{\"email\": \"$1\", \"password\": \"$2\"}" -l --stage $stage
 exit 0;

@@ -53,8 +53,12 @@ data "aws_iam_policy_document" "oai-read-bucket" {
   }
 }
 
-data "aws_route53_zone" "ooo" {
+data "aws_route53_zone" "oooverflow-io" {
   name = "oooverflow.io."
+}
+
+data "aws_route53_zone" "scoreboard-ooo" {
+  name = "scoreboard.ooo."
 }
 
 resource "aws_cloudfront_distribution" "registration-development" {
@@ -241,7 +245,7 @@ resource "aws_db_instance" "scoreboard" {
   db_subnet_group_name        = aws_db_subnet_group.group.id
   deletion_protection         = true
   engine                      = "postgres"
-  engine_version              = "10.6"
+  engine_version              = "10.15" #13.1"
   identifier                  = "sb-${var.environment}"
   instance_class              = var.db_instance_class
   multi_az                    = true
@@ -318,9 +322,9 @@ resource "aws_route53_record" "register-a" {
     evaluate_target_health = false
     zone_id                = aws_cloudfront_distribution.registration-production[count.index].hosted_zone_id
   }
-  name    = "register.${data.aws_route53_zone.ooo.name}"
+  name    = "register.${data.aws_route53_zone.oooverflow-io.name}"
   type    = "A"
-  zone_id = data.aws_route53_zone.ooo.zone_id
+  zone_id = data.aws_route53_zone.oooverflow-io.zone_id
 }
 
 resource "aws_route53_record" "register-aaaa" {
@@ -331,9 +335,9 @@ resource "aws_route53_record" "register-aaaa" {
     evaluate_target_health = false
     zone_id                = aws_cloudfront_distribution.registration-production[count.index].hosted_zone_id
   }
-  name    = "register.${data.aws_route53_zone.ooo.name}"
+  name    = "register.${data.aws_route53_zone.oooverflow-io.name}"
   type    = "AAAA"
-  zone_id = data.aws_route53_zone.ooo.zone_id
+  zone_id = data.aws_route53_zone.oooverflow-io.zone_id
 }
 
 resource "aws_route53_record" "scoreboard-a" {
@@ -344,9 +348,9 @@ resource "aws_route53_record" "scoreboard-a" {
     evaluate_target_health = false
     zone_id                = aws_cloudfront_distribution.scoreboard-production[count.index].hosted_zone_id
   }
-  name    = "scoreboard.${data.aws_route53_zone.ooo.name}"
+  name    = data.aws_route53_zone.scoreboard-ooo.name
   type    = "A"
-  zone_id = data.aws_route53_zone.ooo.zone_id
+  zone_id = data.aws_route53_zone.scoreboard-ooo.zone_id
 }
 
 resource "aws_route53_record" "scoreboard-aaaa" {
@@ -357,9 +361,9 @@ resource "aws_route53_record" "scoreboard-aaaa" {
     evaluate_target_health = false
     zone_id                = aws_cloudfront_distribution.scoreboard-production[count.index].hosted_zone_id
   }
-  name    = "scoreboard.${data.aws_route53_zone.ooo.name}"
+  name    = data.aws_route53_zone.scoreboard-ooo.name
   type    = "AAAA"
-  zone_id = data.aws_route53_zone.ooo.zone_id
+  zone_id = data.aws_route53_zone.scoreboard-ooo.zone_id
 }
 
 resource "aws_route_table" "private" {

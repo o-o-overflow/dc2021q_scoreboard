@@ -70,7 +70,10 @@ class ChallengeModal extends React.Component {
 
   loadData = () => {
     this.setState({ description: "Loading..." });
-    fetch("scoreboard.json", { method: "GET" })
+    fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/challenge/${this.props.challengeId}`,
+      { method: "GET", signal: this.controller.signal }
+    )
       .then((response) =>
         response.json().then((body) => ({ body, status: response.status }))
       )
@@ -84,9 +87,7 @@ class ChallengeModal extends React.Component {
           literalMidWordUnderscores: true,
           simplifiedAutoLink: true,
         });
-        const description = converter.makeHtml(
-          body[this.props.challengeId]["description"]
-        );
+        const description = converter.makeHtml(body.message);
         this.setState({ description });
       })
       .catch((error) => {

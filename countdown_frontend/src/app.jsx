@@ -6,7 +6,7 @@ function App() {
     <div>
       <header>
         <div className="container">
-          <a href="http://www.oooverflow.io/">
+          <a href="https://oooverflow.io/">
             <img
               alt="OOO logo"
               src={process.env.PUBLIC_URL + "ooo-logo-175.png"}
@@ -17,7 +17,7 @@ function App() {
       </header>
       <div className="container">
         <h1>Countdown to DEF CON CTF Quals</h1>
-        <Counter startTime={1589587200} />
+        <Counter startTime={1619827200} />
         <p>
           Registration:{" "}
           <a href="https://register.oooverflow.io">

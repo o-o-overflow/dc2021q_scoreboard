@@ -59,7 +59,7 @@ class LogInModal extends React.Component {
         status: "computing proof of work",
       });
       this.worker.postMessage({
-        prefix: "0123",
+        prefix: "f00f",
         value: `${this.state.email}!${this.state.password}!${this.hashTimestamp}`,
       });
       return;

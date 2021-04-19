@@ -11,12 +11,12 @@ functions:
   #               id: true
   #               token: true
   #   handler: handler.challenge
-  # challenge_delete:
-  #   handler: handler.challenge_delete
-  # challenge_open:
-  #   handler: handler.challenge_open
-  # challenge_update:
-  #   handler: handler.challenge_update
+  challenge_delete:
+    handler: handler.challenge_delete
+  challenge_open:
+    handler: handler.challenge_open
+  challenge_update:
+    handler: handler.challenge_update
   # challenges:
   #   events:
   #     - http:
@@ -24,10 +24,10 @@ functions:
   #         method: GET
   #         path: challenges
   #   handler: handler.challenges
-  # challenges_add:
-  #   handler: handler.challenges_add
-  # challenges_set:
-  #   handler: handler.challenges_set
+  challenges_add:
+    handler: handler.challenges_add
+  challenges_set:
+    handler: handler.challenges_set
   migrate:
     handler: handler.migrate
   ping:

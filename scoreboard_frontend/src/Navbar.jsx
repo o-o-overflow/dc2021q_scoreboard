@@ -52,7 +52,7 @@ function Navbar(props) {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
       <Link className="navbar-brand" to="/">
-        DC28 Quals
+        DC29 Quals
       </Link>
       <div className="navbar-collapse">
         <ul className="navbar-nav mr-auto">{leftLinks}</ul>

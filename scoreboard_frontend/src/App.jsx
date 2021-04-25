@@ -11,9 +11,9 @@ import Scoreboard from "./Scoreboard";
 
 ReactModal.setAppElement("#root");
 
-const LOCAL_STORAGE_ACCESS_TOKEN = "dc28_access_token";
-const LOCAL_STORAGE_REFRESH_TOKEN = "dc28_refresh_token";
-const LOCAL_STORAGE_TEAM = "dc28_team";
+const LOCAL_STORAGE_ACCESS_TOKEN = "dc29_access_token";
+const LOCAL_STORAGE_REFRESH_TOKEN = "dc29_refresh_token";
+const LOCAL_STORAGE_TEAM = "dc29_team";
 
 function challengePoints(solvers, category) {
   if (!Number.isInteger(solvers) || solvers < 2) return 500;
@@ -304,7 +304,7 @@ class App extends React.Component {
           />
 
           <ReactModal
-            className="anthing-but-the-default"
+            className="login-modal"
             contentLabel="Log In Modal"
             isOpen={this.state.showModal === "logIn"}
             onRequestClose={this.handleCloseModal}
@@ -315,7 +315,7 @@ class App extends React.Component {
             />
           </ReactModal>
           <ReactModal
-            className="anything-but-the-default"
+            className="challenge-modal"
             contentLabel="Challenge Modal"
             isOpen={this.state.showModal === "challenge"}
             onRequestClose={this.handleCloseModal}

@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Ensure OOO_S3_BUCKET_PREFIX is set
 if [ -z "$OOO_S3_BUCKET_PREFIX" ]; then
-    echo "\$OOO_S3_BUCKET_PREFIX is not set. Please source .env file."
+    echo "\$OOO_S3_BUCKET_PREFIX is not set. Please source the .env file at the repo root."
     exit 1
 fi
 

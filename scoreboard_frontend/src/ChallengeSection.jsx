@@ -4,6 +4,8 @@ import React from "react";
 import Challenge from "./Challenge";
 import HiddenChallenge from "./HiddenChallenge";
 
+/* There's actually only one ChallengeSection */
+
 function ChallengeSection(props) {
   const challenges = props.challenges.map((challenge, index) => {
     if (challenge.unopened) {

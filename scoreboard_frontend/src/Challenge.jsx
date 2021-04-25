@@ -2,6 +2,19 @@ import PropTypes from "prop-types";
 import exact from "prop-types-exact";
 import React from "react";
 
+/* This is how they all appear together on the homepage -- see ChallengeModal for the dialog box */
+
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+function getRandomMapPct() {
+    return '' + getRandomInt(10,80) + "%";
+}
+
+
 function Challenge(props) {
   const { authenticated, id, points, solved, tags, item_index } = props;
 
@@ -9,30 +22,24 @@ function Challenge(props) {
   let classes = "challenge";
   if (authenticated) {
     classes += " challenge-authenticated";
+    onClick = () => props.onClick(props); /* this somehow bubbles up to opening the modal by setting a state */
+  } else {
+      /* TODO: "Gotta login to see that" */
+      /* We should somehow go up to handleOpenLogInModal and/or change handleOpenChallengeModal */
     onClick = () => props.onClick(props);
   }
 
-  var styles;
-  if (solved) {
-    classes += "challenge-solved";
-    styles = {
-      backgroundImage: `url('pics/d/${item_index}.gif')`,
-    };
-  } else {
-    styles = {
-      backgroundImage: `url('pics/a/${item_index}.gif')`,
-    };
+
+  var styles = {
+      'top': getRandomMapPct(),     // TODO: must specify in each challenge or at least make stable, this code runs every time the tab is selected
+      'left': getRandomMapPct(),
+      backgroundImage: `url('pics/chaldot.png)`,
   }
 
-  const tag_divs = tags.split(",").map((tag, index) => {
-    return (
-      <div
-        title={`${tag.trim()}`}
-        className={`category category-${tag.trim()}`}
-        key={index}
-      />
-    );
-  });
+  if (solved) {
+    classes += "challenge-solved";
+  }
+
 
   return (
     <div
@@ -41,11 +48,7 @@ function Challenge(props) {
       onKeyPress={() => {}}
       style={styles}
     >
-      <div>{tag_divs}</div>
-      <div className="challenge-title">
-        <img src="/pics/nomic.png" alt="no microphone" />
-        {id}
-      </div>
+      <div className="challenge-title">{id}</div>
       <div className="challenge-score">{points}</div>
     </div>
   );
@@ -56,7 +59,6 @@ Challenge.propTypes = exact({
   onClick: PropTypes.func.isRequired,
   points: PropTypes.number.isRequired,
   solved: PropTypes.bool.isRequired,
-  tags: PropTypes.string.isRequired,
   item_index: PropTypes.number.isRequired,
 });
 export default Challenge;

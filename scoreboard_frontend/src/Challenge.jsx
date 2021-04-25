@@ -5,14 +5,8 @@ import React from "react";
 /* This is how they all appear together on the homepage -- see ChallengeModal for the dialog box */
 
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-}
-function getRandomMapPct() {
-    return '' + getRandomInt(10,80) + "%";
-}
+function getMapTop(item_i) { return '' + (15 + 9*item_i) + "%"; }
+function getMapLeft(item_i) { return '' + (5 + 14*item_i) + "%"; }
 
 
 function Challenge(props) {
@@ -31,15 +25,18 @@ function Challenge(props) {
 
 
   var styles = {
-      'top': getRandomMapPct(),     // TODO: must specify in each challenge or at least make stable, this code runs every time the tab is selected
-      'left': getRandomMapPct(),
-      backgroundImage: `url('pics/chaldot.png)`,
+      // TODO: must specify in each challenge or at least make stable, this code runs every time the tab is selected
+      'top': getMapTop(item_index),
+      'left': getMapLeft(item_index),
+      backgroundImage: `url('pics/chaldot.png')`,
   }
 
   if (solved) {
     classes += "challenge-solved";
   }
 
+  // TODO: better tooltip
+  let tooltip = "" + id + "\nCurrently " + points + " points";
 
   return (
     <div
@@ -47,9 +44,8 @@ function Challenge(props) {
       onClick={onClick}
       onKeyPress={() => {}}
       style={styles}
+      title={tooltip}
     >
-      <div className="challenge-title">{id}</div>
-      <div className="challenge-score">{points}</div>
     </div>
   );
 }

@@ -34,16 +34,8 @@ class ChallengeMenu extends React.Component {
       />
     );
   };
-
-  render() {
-    const sections = this.sectionOrder.map(this.buildSections);
-    return (
-      <>
-        <div className="distribution-map">
-            <img src="pics/chaldot.png" className="xxx" alt="" />
-            <img src="pics/map.jpg" className="thebigmap" alt="" />
-            {sections}
-        </div>
+//<img src="pics/map.jpg" className="thebigmap" alt="" />
+/*
         <footer className="chalmenu-footer">
           <a href="https://discord.gg/defcon" target="_blank" rel="noopener noreferrer">
               Chat with us on Discord
@@ -54,6 +46,20 @@ class ChallengeMenu extends React.Component {
           <a href="https://defcon.org/" rel="noreferrer">DEF CON</a>
           <span className="sepbar">|</span>
           <span className="tagline">You can't stop the signal</span>
+        </footer>
+*/
+
+  render() {
+    const sections = this.sectionOrder.map(this.buildSections);
+    return (
+      <>
+        <div id="thebigdiv">
+            {sections}
+        </div>
+        <footer className="chalmenu-footer">
+          <a href="https://discord.gg/defcon" target="_blank" rel="noopener noreferrer">
+          You can't stop the signal
+          </a>
         </footer>
       </>
     );

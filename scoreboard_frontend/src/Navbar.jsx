@@ -49,8 +49,9 @@ function Navbar(props) {
     </li>
   ));
 
+  // TODO: could I move it to the bottom / make it show on-click?
   return (
-    <nav className="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+    <nav className="navbar navbar-expand navbar-dark sticky-top">
       <Link className="navbar-brand" to="/">
         DC29 Quals
       </Link>

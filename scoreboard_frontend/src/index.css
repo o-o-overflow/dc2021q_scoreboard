@@ -7,6 +7,7 @@
     --dc-green:  #64d576;
     --dc-text:   #ccc;  /* Based on the theme page */
     /*font-family: Conthrax;  Conthrax and Futura are defcon's official theme fonts */
+    /* TODO: buy the web font */
 
     /* our own theme, sort of */
     --ooo-dark: #222b2f;
@@ -25,6 +26,7 @@ BODY {
 A { color: var(--dc-blue); }
 H1 { color: var(--dc-orange); font-family: Conthrax; }
 H2 { color: var(--dc-orange); font-family: Conthrax; }
+.navbar { font-family: Conthrax; }
 
 
 .rulespage {
@@ -34,8 +36,23 @@ H2 { color: var(--dc-orange); font-family: Conthrax; }
 }
 .rulespage h2 { font-size: 1.3rem; }
 
-img.thebigmap { width: 100%; height: auto; }
 .chalmenu-footer { color: #777; text-align: center; }
+.sepbar { padding-left: 1em; padding-right: 1em; }
+
+#thebigdiv {
+    /* We want the dot positions to be relative to this div.
+     * Apparently the div has to have position: relative or absolute */
+    position: relative;
+
+    /* The image is: width: 1678px; height: 908px; */
+    width:  95vw;  min-width:  800px;
+    height: 90vh;  min-height: 433px; /* TODO: Can I make it relative to the width? */
+
+    /* The map image, stretched to cover the div exactly */
+    background: no-repeat url("/pics/map.jpg");
+    background-size: 100% 100%;
+}
+
 
 div.challenge {
     position: absolute;  /* per challenge: top: x% left: y% ... */

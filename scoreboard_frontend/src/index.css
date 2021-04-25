@@ -64,10 +64,10 @@ div.challenge {
     background-repeat: no-repeat;
     opacity: 0.8;
 
-    border-radius: 20px;
-    border: 3px solid #7fcff7;
+    /*border-radius: 20px;*/
+    /*border: 3px solid #7fcff7;*/
 
-    transition: opacity 0.25s ease-in-out 0.25s, width 0.25s ease-in-out 0.25s, height 0.25s ease-in-out 0.25s, z-index 0.25s ease-in-out 0.25s;
+    /*transition: opacity 0.25s ease-in-out 0.25s, width 0.25s ease-in-out 0.25s, height 0.25s ease-in-out 0.25s, z-index 0.25s ease-in-out 0.25s;*/
 }
 div.challenge:active, div.challenge:focus {
     opacity: 1;

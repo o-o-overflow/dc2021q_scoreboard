@@ -44,21 +44,17 @@ class ChallengeMenu extends React.Component {
         ;
         <footer className="navbar navbar-dark bg-dark fixed-bottom">
           <div>
-            <img alt="zoom-video" src="/pics/video_icons.png" />
-          </div>
-          <div>
-            <a
-              href="https://discord.gg/yTjdTH"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img alt="zoom-chat" src="/pics/chat.png" />
+            <a href="https://discord.gg/defcon" target="_blank" rel="noopener noreferrer">
+                Chat
             </a>
           </div>
-          <h3>
-            <a href="https://oooverflow.io/">
-              <span className="badge badge-danger">Leave</span>
-            </a>
+          <div className="tagline">
+            You can't stop the signal
+          </div>
+          <h3 className="footerlinks">
+            <a href="https://oooverflow.io/" rel="noreferrer">Order Of the Overflow</a>
+            |
+            <a href="https://defcon.org/" rel="noreferrer">DEF CON</a>
           </h3>
         </footer>
       </>

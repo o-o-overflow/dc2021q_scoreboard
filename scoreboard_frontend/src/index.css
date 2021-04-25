@@ -1,11 +1,50 @@
-body {
-  background: #111111;
+:root {
+    /* defcon's official theme colors -- official bg is #111? */
+    --dc-yellow: #eec643;
+    --dc-red:    #e25238;
+    --dc-orange: #dc8530;
+    --dc-blue:   #4999e5;
+    --dc-green:  #64d576;
+    --dc-text:   #ccc;  /* Based on the theme page */
+    /*font-family: Conthrax;  Conthrax and Futura are defcon's official theme fonts */
+
+    /* our own theme, sort of */
+    --ooo-dark: #222b2f;
+    --ooo-gold: #caa851;
+    --ooo-darkred: #6d1422;
+    --ooo-red: #FF5769;  /* Light but not so light and, as always, a problem */
+    --ooo-white: #eaeaea;
+
 }
+
+BODY {
+    background-color: var(--ooo-dark);
+    /* Can't set it here, too many places assume black    color: var(--ooo-white); */
+}
+A { color: var(--dc-blue); }
+H1 { color: var(--dc-orange); font-family: Conthrax; }
+H2 { color: var(--dc-orange); font-family: Conthrax; }
+
+
+.rulespage {
+    color: var(--dc-text);
+    padding: 1em;
+    max-width: 1000px; margin: auto; /* centered */
+}
+.rulespage h2 { font-size: 1.3rem; }
+
+.tagline { color: #777; }
+
+
 
 .ReactModal__Overlay {
   z-index: 1021 !important;
 }
 
+
+
+/* TODO: could we get rid of categories? */
+/*
 .category:before {
   float: left;
   font-size: 20pt;
@@ -51,10 +90,8 @@ body {
 .category-welcoming:before {
   content: "👋";
 }
+*/
 
-.dark-background {
-  background: #111111;
-}
 
 .challenge {
   background-size: cover;
@@ -95,6 +132,11 @@ body {
   position: absolute;
   width: 300px;
 }
+
+
+
+
+/* These seem more important */
 
 .footer-padding {
   padding-bottom: 60px;

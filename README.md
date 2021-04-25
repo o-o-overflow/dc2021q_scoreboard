@@ -46,6 +46,8 @@ your `~/.aws/credentials` file containing your `aws_access_key_id` and
 `aws_secret_access_key`. For more information on setting up this file see:
 https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
 
+You also need the [AWS CLI](https://aws.amazon.com/cli/). New versions have their own install system.
+
 ## Frontend Dependencies
 
 The frontend applications are all written using React. React depends on npm and
@@ -75,6 +77,11 @@ npm install -g serverless
 npm install --save-dev serverless-kms-secrets
 ```
 
+## .env files
+
+**TODO**: you have to source [.env](.env) at the repo root.
+
+
 # Frontend Applications
 
 The frontend applications each build to static html, css, and javascript. The
@@ -86,13 +93,13 @@ Cloudfront distributions are configured to serve files out of that S3 bucket
 mapped to an appropriate prefix.
 
 - (production) https://scoreboard.oooverflow.io
-- (development) https://d2b8nk094e89za.cloudfront.net
+- (development) https://d1768hg74eqlzd.cloudfront.net
 
 The S3 bucket is accessible via `Coudfront` through the `access-identity`
 Origin Access Identity:
 https://console.aws.amazon.com/cloudfront/home?#oai:
 
-The `development` distribution is protected by HTTP basic authentication using
+**TODO: changed?** The `development` distribution is protected by HTTP basic authentication using
 the attached `scoreboard-basic-auth` lambda function:
 https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions/scoreboard-basic-auth?tab=graph
 
@@ -127,8 +134,8 @@ able to see updates within a minute of deployment.
 ## Registration
 
 This application is where team will go to register. By default it deploys to
-https://d2ni0nv313ubc4.cloudfront.net where it is protected by HTTP basic
-authentication (credentials listed in #quals_scoreboard on Slack). This
+https://d1768hg74eqlzd.cloudfront.net/#/ where it is protected by HTTP basic
+authentication (credentials listed on Slack). This
 application is intended to be deployed to the production environment at the
 start of the competition.
 
@@ -141,7 +148,7 @@ yarn start
 
 ### Deployment
 
-Deploy to https://d2ni0nv313ubc4.cloudfront.net via:
+Deploy to https://d1768hg74eqlzd.cloudfront.net/ via:
 
 ```sh
 cd registration_frontend
@@ -230,6 +237,8 @@ front-end changes as well.
 order to issue that command in the production environment.
 
 ## Setting the challenges
+
+**TODO: can use the script instead?**
 
 To rewrite the set of challenges (this is a destructive action), first create a
 `scoreboard.json` using chalmanager.

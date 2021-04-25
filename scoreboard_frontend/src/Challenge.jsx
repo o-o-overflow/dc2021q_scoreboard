@@ -28,12 +28,12 @@ function Challenge(props) {
       // TODO: must specify in each challenge or at least make stable, this code runs every time the tab is selected
       'top': getMapTop(item_index),
       'left': getMapLeft(item_index),
-      backgroundImage: `url('/pics/tower_red.svg')`,
+      backgroundImage: `url('/pics/radio_red.svg')`,
   }
 
   if (solved) {
     classes += "challenge-solved";
-    styles.backgroundImage = `url('/pics/tower_green.svg')`;
+    styles.backgroundImage = `url('/pics/radio_green.svg')`;
   }
 
   // TODO: better tooltip

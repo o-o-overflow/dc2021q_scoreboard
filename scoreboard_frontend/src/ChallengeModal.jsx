@@ -208,8 +208,14 @@ class ChallengeModal extends React.Component {
     const solve_string =
       this.props.numSolved === 1 ? "1 solve" : `${this.props.numSolved} solves`;
 
+    const chalmodalStyle = {
+        'max-width': '90%',
+        'min-width': '400px',
+        width: 'fit-content',
+    };
+
     return (
-      <div className="modal-dialog" role="document">
+      <div className="modal-dialog" role="document" style={chalmodalStyle}>
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">{`${this.props.challengeId} (${solve_string})`}</h5>

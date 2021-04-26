@@ -113,8 +113,12 @@ class LogInModal extends React.Component {
       status = <div>Status: {this.state.status}</div>;
     }
 
+    const loginmodalStyle = {
+        'min-width': '40rem',
+    };
+
     return (
-      <div className="modal-dialog" role="document">
+      <div className="modal-dialog" role="document" style={loginmodalStyle}>
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Log In</h5>

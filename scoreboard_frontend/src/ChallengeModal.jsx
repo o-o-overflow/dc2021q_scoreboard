@@ -210,7 +210,7 @@ class ChallengeModal extends React.Component {
 
     const chalmodalStyle = {
         'max-width': '60em',
-        'min-width': '400px',
+        'min-width': '600px',
         width: 'fit-content',
     };
 

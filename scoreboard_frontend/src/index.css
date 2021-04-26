@@ -3,7 +3,7 @@
     --dc-yellow: #eec643;
     --dc-red:    #e25238;
     --dc-orange: #dc8530;
-    --dc-blue:   #4999e5;
+    --dc-blue:   #4999e5;  /* hmm... still kinda dark */
     --dc-green:  #64d576;
     --dc-text:   #ccc;  /* Based on the theme page */
 
@@ -22,11 +22,13 @@
     /* Font (c) 2010-2021 Fontspring */
     font-family: 'conthraxsemibold';
     src: url('/fonts/conthrax-sb-webfont.woff2') format('woff2'),
-         url('/fonts/conthrax-sb-webfont.woff') format('woff');
+         url('/fonts/conthrax-sb-webfont.woff') format('woff'),
+         local("Conthrax");
     font-weight: normal;
     font-style: normal;
 
-    font-display: swap; /* Don't block, but wait indefinitely to replace */
+    /*font-display: swap;*/ /* Don't block, but wait indefinitely to replace */
+    font-display: block;
 }
 
 
@@ -34,10 +36,10 @@ BODY {
     background-color: var(--map-bg);
     /* Can't set it here, too many places assume black    color: var(--ooo-white); */
 }
-A { color: var(--dc-blue); }
-H1 { color: var(--dc-orange); font-family: conthraxsemibold; }
-H2 { color: var(--dc-orange); font-family: conthraxsemibold; }
-.navbar { font-family: conthraxsemibold; }
+A { color: #a1cbf2; } /* my ligther variation on dc's color */
+H1 { color: var(--dc-orange); font-family: conthraxsemibold,monospace; }
+H2 { color: var(--dc-orange); font-family: conthraxsemibold,monospace; }
+.navbar { font-family: conthraxsemibold,monospace; }
 
 
 .rulespage {
@@ -47,7 +49,11 @@ H2 { color: var(--dc-orange); font-family: conthraxsemibold; }
 }
 .rulespage h2 { font-size: 1.3rem; }
 
-.chalmenu-footer { color: #555; text-align: center; }
+.chalmenu-footer {
+    color: #5a5a5a;
+    text-align: center;
+    font-family: 'conthraxsemibold';
+}
 .sepbar { padding-left: 1em; padding-right: 1em; }
 
 #thebigdiv {
@@ -91,7 +97,7 @@ button.challenge_solved {
 
 
 .modal-dialog { opacity: 0.9; }
-.modal-header { font-family: conthraxsemibold; background-color: var(--ooo-dark); color: var(--dc-yellow); }
+.modal-header { font-family: conthraxsemibold,monospace; background-color: var(--ooo-dark); color: var(--dc-yellow); }
 .modal-title { font-size: 1.8rem; }
 .modal-header button { color: white; }
 .modal-body { font-family: monospace; background-color: var(--ooo-dark); color: #ddd; font-size: 110%; }
@@ -102,8 +108,8 @@ button.challenge_solved {
 /* a:visited etc. */
 .modal-footer { background-color: #304650; color: var(--dc-text); font-family: monospace; } /* the base color and font are used in the login modal status message */
 .modal-footer input[type=text] { background-color: #ccc; color: black; font-family: monospace; }
-.modal-footer input[type=button] { background-color: var(--dc-red); color: white; font-family: conthraxsemibold; border-color: var(--dc-red); }
-.modal-footer button { font-family: conthraxsemibold; }
+.modal-footer input[type=button] { background-color: var(--dc-red); color: white; font-family: conthraxsemibold,monospace; border-color: var(--dc-red); }
+.modal-footer button { font-family: conthraxsemibold,monospace; }
 /* btn-secondary */
 
 

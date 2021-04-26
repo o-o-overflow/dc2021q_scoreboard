@@ -15,7 +15,7 @@ function Navbar(props) {
   if (props.authenticated) {
     tokenLink = (
       <Link className="nav-link" onClick={props.handleLogOut} to="#">
-        Log Out {props.team}
+        Log&nbsp;Out {props.team}
       </Link>
     );
   } else {
@@ -25,7 +25,7 @@ function Navbar(props) {
         className="btn btn-link nav-link"
         onClick={props.handleOpenLogInModal}
       >
-        Log In
+        Log&nbsp;In
       </button>
     );
   }
@@ -56,8 +56,15 @@ function Navbar(props) {
         DC29 Quals
       </Link>
       <div className="navbar-collapse">
-        <ul className="navbar-nav mr-auto">{leftLinks}</ul>
-        <ul className="navbar-nav ml-auto">{rightLinks}</ul>
+        <ul className="navbar-nav mr-auto">
+            {leftLinks}
+            <li className="nav-item" key="Chat"><a className="nav-link" href="https://discord.gg/defcon" target="_blank" rel="noopener noreferrer">Chat</a></li>
+        </ul>
+        <ul className="navbar-nav ml-auto">
+            <li className="nav-item"><a className="nav-link" href="https://twitter.com/oooverflow" target="_blank" rel="noopener noreferrer">OOO</a></li>
+            <li className="nav-item"><a className="nav-link" href="https://defcon.org" target="_blank" rel="noopener noreferrer">DEF&nbsp;CON</a></li>
+            {rightLinks}
+        </ul>
       </div>
     </nav>
   );

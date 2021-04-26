@@ -169,7 +169,7 @@ class ChallengeModal extends React.Component {
     let status;
     const buttonText = this.state.buttonDisabled
       ? "Please Wait"
-      : "Submit Flag";
+      : "Send Flag";
     if (this.state.status !== "") {
       status = (
         <div className="alert alert-secondary">Status: {this.state.status}</div>
@@ -209,7 +209,7 @@ class ChallengeModal extends React.Component {
       this.props.numSolved === 1 ? "1 solve" : `${this.props.numSolved} solves`;
 
     const chalmodalStyle = {
-        'max-width': '90%',
+        'max-width': '60em',
         'min-width': '400px',
         width: 'fit-content',
     };

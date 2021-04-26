@@ -57,9 +57,7 @@ class ChallengeMenu extends React.Component {
             {sections}
         </div>
         <footer className="chalmenu-footer">
-          <a href="https://discord.gg/defcon" target="_blank" rel="noopener noreferrer">
           You can't stop the signal
-          </a>
         </footer>
       </>
     );

@@ -130,7 +130,7 @@ class App extends React.Component {
       })
       .catch((error) => {
         console.log(error);
-        alert("An unexpected error occurred. Please try again.");
+        alert("An unexpected error occurred. Sorry about that. Try logging in again.");
       });
   };
 

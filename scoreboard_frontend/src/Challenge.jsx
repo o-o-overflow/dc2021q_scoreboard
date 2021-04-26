@@ -20,7 +20,6 @@ function Challenge(props) {
   } else {
       /* TODO: "Gotta login to see that" */
       /* We should somehow go up to handleOpenLogInModal and/or change handleOpenChallengeModal */
-    onClick = () => props.onClick(props);
   }
 
 
@@ -40,14 +39,14 @@ function Challenge(props) {
   let tooltip = "" + id + "\nCurrently " + points + " points";
 
   return (
-    <div
+    <button
       className={classes}
       onClick={onClick}
       onKeyPress={() => {}}
       style={styles}
       title={tooltip}
     >
-    </div>
+    </button>
   );
 }
 Challenge.propTypes = exact({

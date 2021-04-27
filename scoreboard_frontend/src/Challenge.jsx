@@ -10,6 +10,7 @@ function Challenge(props) {
 
   let onClick = null;
   let classes = "challenge";
+  let classes_chalname = "chalname";
   if (authenticated) {
     classes += " challenge-authenticated";
   }
@@ -19,7 +20,6 @@ function Challenge(props) {
       // TODO: must specify in each challenge or at least make stable, this code runs every time the tab is selected
       'top': '' + (15 + 9*item_index) + "%",
       'left': '' + (5 + 14*item_index) + "%",
-      backgroundImage: `url('/pics/radio_red.svg')`,
   }
   const styles_chalname = {
       'top': '' + (15 + 9*item_index) + "%",
@@ -27,8 +27,13 @@ function Challenge(props) {
   }
 
   if (solved) {
-    classes += "challenge-solved";
-    styles.backgroundImage = `url('/pics/radio_green.svg')`;
+    classes += " challenge-solved";
+    classes_chalname += " chalname-solved";
+    styles.backgroundImage = `url('/pics/radio_green.svg')`;  /* packer issues */
+  } else {
+    classes += " challenge-unsolved";
+    classes_chalname += " chalname-unsolved";
+    styles.backgroundImage = `url('/pics/radio_red.svg')`;
   }
 
   // TODO: better tooltip
@@ -47,7 +52,7 @@ function Challenge(props) {
       id={id}
     >
     </button>
-    <div style={styles_chalname} className="chalname"><label htmlFor={id}>{id}</label></div>
+    <div style={styles_chalname} className={classes_chalname}><label htmlFor={id}>{id}</label></div>
     </>
   );
 }

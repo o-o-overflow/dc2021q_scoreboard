@@ -88,21 +88,18 @@ button.challenge {
 
     /*transition: opacity 0.25s ease-in-out 0.25s, width 0.25s ease-in-out 0.25s, height 0.25s ease-in-out 0.25s, z-index 0.25s ease-in-out 0.25s;*/
 }
-button.challenge:active, button.challenge:focus {
-    /* XXX: may want to go back to <button> elements for this */
-    opacity: 1;
-}
-button.challenge_solved {
-    opacity: 0.5;
-}
 div.chalname {
     position: absolute;  /* same position as the button */
     padding-top: 12px; padding-left: 60px; /* This should put the text on its right */
-
-    color: #bbb;
     font-family: conthraxsemibold,monospace;
     cursor: pointer;
+    color: white;
 }
+button.challenge:active, button.challenge:focus { opacity: 1; }
+button.challenge-unsolved { box-shadow: 3px 3px 3px red; }
+button.challenge-solved   { box-shadow: 3px 3px 3px green; }
+div.chalname-unsolved     { text-shadow: 3px 3px 3px red; }
+div.chalname-solved       { text-shadow: 3px 3px 3px green; }
 
 
 .modal-dialog { opacity: 0.9; }

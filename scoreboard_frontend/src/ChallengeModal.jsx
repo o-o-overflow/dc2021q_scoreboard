@@ -209,8 +209,8 @@ class ChallengeModal extends React.Component {
       this.props.numSolved === 1 ? "1 solve" : `${this.props.numSolved} solves`;
 
     const chalmodalStyle = {
-        'max-width': '60em',
-        'min-width': '600px',
+        'maxWidth': '60em',
+        'minWidth': '600px',
         width: 'fit-content',
     };
 

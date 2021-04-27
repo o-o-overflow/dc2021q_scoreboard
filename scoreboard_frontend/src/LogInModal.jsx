@@ -114,7 +114,7 @@ class LogInModal extends React.Component {
     }
 
     const loginmodalStyle = {
-        'min-width': '40rem',
+        'minWidth': '40rem',
     };
 
     return (

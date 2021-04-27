@@ -6,7 +6,7 @@ import React from "react";
 
 
 function Challenge(props) {
-  const { authenticated, id, points, solved, item_index } = props;
+  const { authenticated, id, item_index, points, solved } = props;
 
   let onClick = null;
   let classes = "challenge";
@@ -48,16 +48,17 @@ function Challenge(props) {
       id={id}
     >
     </button>
-    <div style={styles_chalname} className="chalname"><label for={id}>{id}</label></div>
+    <div style={styles_chalname} className="chalname"><label htmlFor={id}>{id}</label></div>
     </>
   );
 }
 Challenge.propTypes = exact({
   authenticated: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
+  item_index: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
   points: PropTypes.number.isRequired,
   solved: PropTypes.bool.isRequired,
-  item_index: PropTypes.number.isRequired,
+  tags: PropTypes.string.isRequired,
 });
 export default Challenge;

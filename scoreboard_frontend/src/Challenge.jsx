@@ -22,7 +22,6 @@ function Challenge(props) {
       backgroundImage: `url('/pics/radio_red.svg')`,
   }
   const styles_chalname = {
-      // TODO: somehow this is not the same as above?!? Accumulates changes? WTF...
       'top': '' + (15 + 9*item_index) + "%",
       'left': '' + (5 + 14*item_index) + "%",
   }

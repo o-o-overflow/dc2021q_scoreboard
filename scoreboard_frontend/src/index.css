@@ -96,11 +96,12 @@ button.challenge_solved {
     opacity: 0.5;
 }
 div.chalname {
-    position: relative;  /* see above */
-    cursor: pointer;
+    position: absolute;  /* same position as the button */
+    padding-top: 12px; padding-left: 60px; /* This should put the text on its right */
 
     color: #bbb;
     font-family: conthraxsemibold,monospace;
+    cursor: pointer;
 }
 
 

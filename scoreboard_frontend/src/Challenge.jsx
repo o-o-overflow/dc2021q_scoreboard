@@ -15,7 +15,7 @@ function Challenge(props) {
   }
   onClick = () => props.onClick(props);
 
-  var styles = {
+  let styles = {
       // TODO: must specify in each challenge or at least make stable, this code runs every time the tab is selected
       'top': '' + (15 + 9*item_index) + "%",
       'left': '' + (5 + 14*item_index) + "%",

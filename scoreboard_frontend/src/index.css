@@ -62,8 +62,11 @@ H2 { color: var(--dc-orange); font-family: conthraxsemibold,monospace; }
     position: relative;
 
     /* The image is: width: 1678px; height: 908px; */
-    width:  95vw;  min-width:  800px;
-    height: 90vh;  min-height: 433px; /* TODO: Can I make it relative to the width? */
+    width:  95vw;
+    aspect-ratio: 1678 / 908; /* needs a recent (chrome?) browser though */
+    /*height: 90vh; ^^^^^^^^ let's try to have aspect-ration control it */
+
+    min-width:  800px; min-height: 433px;  /* Let's not go too small */
 
     /* The map image, stretched to cover the div exactly */
     background: no-repeat url("/pics/map.jpg");

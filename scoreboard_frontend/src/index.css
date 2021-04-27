@@ -94,6 +94,13 @@ button.challenge:active, button.challenge:focus {
 button.challenge_solved {
     opacity: 0.5;
 }
+div.chalname {
+    position: relative;  /* see above */
+    cursor: pointer;
+
+    color: #bbb;
+    font-family: conthraxsemibold,monospace;
+}
 
 
 .modal-dialog { opacity: 0.9; }

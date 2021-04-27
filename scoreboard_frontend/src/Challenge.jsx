@@ -5,10 +5,6 @@ import React from "react";
 /* This is how they all appear together on the homepage -- see ChallengeModal for the dialog box */
 
 
-function getMapTop(item_i) { return '' + (15 + 9*item_i) + "%"; }
-function getMapLeft(item_i) { return '' + (5 + 14*item_i) + "%"; }
-
-
 function Challenge(props) {
   const { authenticated, id, points, solved, tags, item_index } = props;
 
@@ -25,9 +21,14 @@ function Challenge(props) {
 
   var styles = {
       // TODO: must specify in each challenge or at least make stable, this code runs every time the tab is selected
-      'top': getMapTop(item_index),
-      'left': getMapLeft(item_index),
+      'top': '' + (15 + 9*item_index) + "%",
+      'left': '' + (5 + 14*item_index) + "%",
       backgroundImage: `url('/pics/radio_red.svg')`,
+  }
+  const styles_chalname = {
+      // TODO: somehow this is not the same as above?!? Accumulates changes? WTF...
+      'top': '' + (15 + 9*item_index) + "%",
+      'left': '' + (5 + 14*item_index) + "%",
   }
 
   if (solved) {
@@ -38,15 +39,21 @@ function Challenge(props) {
   // TODO: better tooltip
   let tooltip = "" + id + "\nCurrently " + points + " points";
 
+
+  // TODO: make div and position both inside it?
   return (
+    <>
     <button
       className={classes}
       onClick={onClick}
       onKeyPress={() => {}}
       style={styles}
       title={tooltip}
+      id={id}
     >
     </button>
+    <div style={styles_chalname} className="chalname"><label for={id}>{id}</label></div>
+    </>
   );
 }
 Challenge.propTypes = exact({

@@ -61,11 +61,9 @@ H2 { color: var(--dc-orange); font-family: conthraxsemibold,monospace; }
      * Apparently the div has to have position: relative or absolute */
     position: relative;
 
-    /* The image is: width: 1678px; height: 908px; */
-    width:  95vw;
-    aspect-ratio: 1678 / 908; /* needs a recent (chrome?) browser though */
-    /*height: 90vh; ^^^^^^^^ let's try to have aspect-ration control it */
-
+    width:  90vw;  /* base width: fill the screen */
+    height: 48vw;  /* same unit as the width, should preserve the ratio */
+                   /* chrome-only for now: aspect-ratio: 1678 / 908 */
     min-width:  800px; min-height: 433px;  /* Let's not go too small */
 
     /* The map image, stretched to cover the div exactly */

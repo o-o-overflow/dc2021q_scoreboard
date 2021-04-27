@@ -90,11 +90,17 @@ class App extends React.Component {
   };
 
   handleOpenChallengeModal = (event) => {
-    /* handle logged out users too? maybe by showing the login form? */
-    this.setState({
-      showChallengeId: event.id,
-      showModal: "challenge",
-    });
+    if (this.state.accessToken === "") {
+      this.setState({
+        showChallengeId: event.id,
+        showModal: "logIn",
+      });
+    } else {
+      this.setState({
+        showChallengeId: event.id,
+        showModal: "challenge",
+      });
+    }
   };
 
   handleOpenLogInModal = () => {

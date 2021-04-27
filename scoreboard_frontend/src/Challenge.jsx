@@ -6,18 +6,14 @@ import React from "react";
 
 
 function Challenge(props) {
-  const { authenticated, id, points, solved, tags, item_index } = props;
+  const { authenticated, id, points, solved, item_index } = props;
 
   let onClick = null;
   let classes = "challenge";
   if (authenticated) {
     classes += " challenge-authenticated";
-    onClick = () => props.onClick(props); /* this somehow bubbles up to opening the modal by setting a state */
-  } else {
-      /* TODO: "Gotta login to see that" */
-      /* We should somehow go up to handleOpenLogInModal and/or change handleOpenChallengeModal */
   }
-
+  onClick = () => props.onClick(props);
 
   var styles = {
       // TODO: must specify in each challenge or at least make stable, this code runs every time the tab is selected

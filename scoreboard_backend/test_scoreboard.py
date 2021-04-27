@@ -26,9 +26,9 @@ PATHS = {
 }
 
 REGISTER_EMAIL = "a{}@a.co".format(int(time.time()))
-VALID_CHALLENGE_ID = "redacted-puzzle"
-VALID_EMAIL = "bb@bb.comm"
-VALID_PASSWORD = "bb@bb.comm"
+VALID_CHALLENGE_ID = "nooopster"
+VALID_EMAIL = "bbzbryce@gmail.com"
+VALID_PASSWORD = "password12"
 
 
 def assert_failure(response, message, status=422, regex=False):
@@ -118,7 +118,7 @@ def invalid_password(request):
     return request.param
 
 
-@pytest.fixture(params=[None, 1, "0", "100001"])
+@pytest.fixture(params=[None, 1, "0", "1000001"])
 def invalid_team_id(request):
     return request.param
 
@@ -184,7 +184,7 @@ def test_challenge(stage):
     challenge_url = url("challenge", stage, id=VALID_CHALLENGE_ID, token=token)
     response = requests.get(challenge_url)
     assert response.status_code == 200
-    assert "\n\nFiles:\n * " in response.json()["message"]
+    assert "\n\n`nooopster.challenges.ooo 1999`" in response.json()["message"]
 
 
 def test_challenge__invalid_challenge_id(invalid_challenge_id_for_url, stage):
@@ -387,11 +387,10 @@ def test_submit__invalid_token(invalid_token, stage):
     )
     assert_failure(response, "invalid access token", status=401)
 
-
 def test_submit__invalid_token_with_bad_signature(stage):
     access = request_token(stage)
-    payload = jwt.decode(access, verify=False)
-    bad_access = jwt.encode(payload, "BADSECRET", algorithm="HS256").decode("utf-8")
+    payload = jwt.decode(access, options={"verify_signature": False})
+    bad_access = jwt.encode(payload, "BADSECRET", algorithm="HS256")
     challenge_id = "puzzle"
     flag = "a"
     nonce = 0  # Does not matter
@@ -612,42 +611,42 @@ def test_token_refresh(stage):
 
 def test_token_refresh__user_id_does_not_match(stage):
     access_, refresh = request_token(stage, include_refresh=True)
-    payload = jwt.decode(refresh, verify=False)
+    payload = jwt.decode(refresh, options={"verify_signature": False})
 
     payload["user_id"] = -1
     payload["verify"] = False
 
-    bad_refresh = jwt.encode(payload, "BADSECRET", algorithm="HS256").decode("utf-8")
+    bad_refresh = jwt.encode(payload, "BADSECRET", algorithm="HS256")
 
     response = requests.post(url("token_refresh", stage), json={"token": bad_refresh})
     assert_failure(
         response,
-        "cannot find user({}, {})".format(payload["user_id"], payload["user_updated"]),
+        "cannot find matching user ({})".format(payload["user_updated"]),
         status=401,
     )
 
 
 def test_token_refresh__user_updated_does_not_match(stage):
     access_, refresh = request_token(stage, include_refresh=True)
-    payload = jwt.decode(refresh, verify=False)
+    payload = jwt.decode(refresh, options={"verify_signature": False})
 
     payload["user_updated"] -= 1
     payload["verify"] = False
 
-    bad_refresh = jwt.encode(payload, "BADSECRET", algorithm="HS256").decode("utf-8")
+    bad_refresh = jwt.encode(payload, "BADSECRET", algorithm="HS256")
 
     response = requests.post(url("token_refresh", stage), json={"token": bad_refresh})
     assert_failure(
         response,
-        "cannot find user({}, {})".format(payload["user_id"], payload["user_updated"]),
+        "cannot find matching user ({})".format(payload["user_updated"]),
         status=401,
     )
 
 
 def test_token_refresh__with_bad_token_signature(stage):
     access_, refresh = request_token(stage, include_refresh=True)
-    payload = jwt.decode(refresh, verify=False)
-    bad_refresh = jwt.encode(payload, "BADSECRET", algorithm="HS256").decode("utf-8")
+    payload = jwt.decode(refresh, options={"verify_signature": False})
+    bad_refresh = jwt.encode(payload, "BADSECRET", algorithm="HS256")
     response = requests.post(url("token_refresh", stage), json={"token": bad_refresh})
     assert_failure(response, "invalid refresh token", status=401)
 

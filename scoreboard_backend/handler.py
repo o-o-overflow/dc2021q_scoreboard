@@ -58,7 +58,7 @@ def valid_token(token_type):
                 return fail()
             try:
                 payload = jwt.decode(
-                    token, JWT_SECRET, algorithms=["HS256"], verify=False
+                    token, JWT_SECRET, options={"verify_signature": False}
                 )
             except jwt.InvalidTokenError:
                 return fail()
@@ -330,7 +330,7 @@ def ping(_event, _context):
 def submit(data, stage):
     challenge_id = data["challenge_id"]
     flag = data["flag"].strip()
-    user_id = jwt.decode(data["token"], verify=False)["user_id"]
+    user_id = jwt.decode(data["token"], options={"verify_signature": False})["user_id"]
 
     with psql_connection(DB_PASSWORD, "scoreboard") as psql:
         with psql.cursor() as cursor:
@@ -481,7 +481,7 @@ def token(data, _stage):
 
 @validate(token=valid_token("refresh"))
 def token_refresh(data, _stage):
-    payload = jwt.decode(data["token"], verify=False)
+    payload = jwt.decode(data["token"], options={"verify_signature": False})
     now = int(time.time())
 
     updated = payload["user_updated"]

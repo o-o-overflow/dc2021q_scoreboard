@@ -77,6 +77,7 @@ H2 { color: var(--dc-orange); font-family: conthraxsemibold,monospace; }
 button.challenge {
     position: absolute;  /* per challenge: top: x% left: y% ... */
     cursor: pointer;
+    z-index: 5; /* above the label div, which covers it */
 
     width: 50px;
     height: 50px;
@@ -91,7 +92,7 @@ button.challenge {
     /*transition: opacity 0.25s ease-in-out 0.25s, width 0.25s ease-in-out 0.25s, height 0.25s ease-in-out 0.25s, z-index 0.25s ease-in-out 0.25s;*/
 }
 div.chalname {
-    position: absolute;  /* same position as the button */
+    position: absolute; z-index: 2;  /* same position as the button, don't cover it. */
     padding-top: 12px; padding-left: 60px; /* This should put the text on its right */
     font-family: conthraxsemibold,monospace;
     color: white;
@@ -109,7 +110,7 @@ div.chalname-solved       { text-shadow: 3px 3px 3px green; }
 .modal-title { font-size: 1.8rem; }
 .modal-header button { color: white; }
 .modal-body { font-family: monospace; background-color: var(--ooo-dark); color: #ddd; font-size: 110%; }
-.modal-body code { font-size: 110%; font-weight: bold; color: var(--dc-red); }
+.modal-body code { font-size: 120%; font-weight: bold; color: var(--dc-blue); }
 .modal-body a { font-weight: bold; color: var(--dc-green); }
 .modal-body ul { list-style-type: disclosure-closed; }
 .modal-body li { color: #999; }

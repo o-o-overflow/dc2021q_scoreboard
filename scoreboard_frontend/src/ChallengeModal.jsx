@@ -12,6 +12,7 @@ class ChallengeModal extends React.Component {
       flag: "",
       status: "",
     };
+    this.my_alert_div = React.createRef();
     this.countDown = null;
     this.hashTimestamp = null;
     this.timerID = null;
@@ -20,7 +21,7 @@ class ChallengeModal extends React.Component {
       if (message.data.complete) {
         this.submit(message.data.nonce);
       } else {
-        this.setState((state, props) => ({ status: `${state.status} .` }));
+        this.setState((state, props) => ({ status: `${state.status}` }));
       }
     };
   }
@@ -40,7 +41,9 @@ class ChallengeModal extends React.Component {
   controller = new AbortController();
 
   handleFlagChange = (event) => {
-    this.setState({ flag: event.target.value });
+    this.setState({ flag: event.target.value });  /* sets at every keypress instead of reading it on submission? */
+    this.my_alert_div.current.style.backgroundColor = ""; /* let's reset the alert colors */
+    this.my_alert_div.current.style.borderColor = "";
   };
 
   handleKeyPress = (event) => {
@@ -91,7 +94,7 @@ class ChallengeModal extends React.Component {
           literalMidWordUnderscores: true,
           simplifiedAutoLink: true,
         });
-        const description = converter.makeHtml(body.message);
+        const description = converter.makeHtml(body.message); /* html from chalmanager */
         this.setState({ description });
       })
       .catch((error) => {
@@ -134,8 +137,18 @@ class ChallengeModal extends React.Component {
         }
         this.setState({
           buttonDisabled: false,
-          status: body.message,
+          status: body.message,  /* received from the server */
         });
+        let thealert = this.my_alert_div.current;
+        if (body.message.includes("success!")) {
+            console.log("cool, valid flag!");
+            thealert.style.backgroundColor = "green";
+            thealert.style.borderColor = "green";
+        } else if (body.message.includes("incorrect flag")) {
+            console.log("sorry, the server says that's not the right flag");
+            thealert.style.backgroundColor = "";
+            thealert.style.borderColor = "red";
+        }
       })
       .catch((error) => {
         if (error.name !== "AbortError") {
@@ -166,13 +179,13 @@ class ChallengeModal extends React.Component {
   }
 
   render() {
-    let status;
+    let status; /* magic name or something? */
     const buttonText = this.state.buttonDisabled
       ? "Please Wait"
       : "Send Flag";
     if (this.state.status !== "") {
       status = (
-        <div className="alert alert-secondary">Status: {this.state.status}</div>
+        <div className="alert alert-secondary" ref={this.my_alert_div}>Status: {this.state.status}</div>
       );
     }
 
@@ -202,6 +215,10 @@ class ChallengeModal extends React.Component {
             value={buttonText}
           />
         </>
+      );
+    } else {
+      form_submission = (
+        <span className="already-solved-msg">This radio station already likes you :)</span>
       );
     }
 

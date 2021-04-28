@@ -1,5 +1,7 @@
 import React from "react";
 
+/* The "Solves" tab:  team Y N N Y N ... for each challenge */
+
 class GameMatrix extends React.Component {
   body() {
     return this.props.teamScoreboardOrder.map((team) => {
@@ -8,7 +10,7 @@ class GameMatrix extends React.Component {
           <td className="sticky-left" key={team.name}>
             {team.name}
           </td>
-          {this.solvedRow(new Set(team.solves))}
+          {this.solvedRow(new Set(team.solves), team.name)}
         </tr>
       );
     });
@@ -26,9 +28,12 @@ class GameMatrix extends React.Component {
     return theHeaders;
   }
 
-  solvedRow(solves) {
+  solvedRow(solves, teamName) {
     return this.challenges.map((id) => {
-      return <td key={id}>{solves.has(id) ? "✔" : "❌"}</td>;
+      const solved = solves.has(id);
+      const tooltip = "" + teamName + " - " + id + " " + (solved ? "solved" : "unsolved");
+      const cls = (solved ? "solves-td-yes" : "solves-td-no");
+      return <td title={tooltip} key={id} className={cls}>{solved ? "Y" : "N"}</td>; /* TODO: emoji */
     });
   }
 

@@ -3,7 +3,7 @@ import exact from "prop-types-exact";
 import React from "react";
 import ChallengeSection from "./ChallengeSection";
 
-/* There's actually only one section, but things are in ChallengeSection */
+/* There's actually only one ChallengeSection now (haiku) */
 
 
 
@@ -34,20 +34,6 @@ class ChallengeMenu extends React.Component {
       />
     );
   };
-//<img src="pics/map.jpg" className="thebigmap" alt="" />
-/*
-        <footer className="chalmenu-footer">
-          <a href="https://discord.gg/defcon" target="_blank" rel="noopener noreferrer">
-              Chat with us on Discord
-          </a>
-          <span className="sepbar">|</span>
-          <a href="https://oooverflow.io/" rel="noreferrer">OOO</a>
-          <span className="sepbar">|</span>
-          <a href="https://defcon.org/" rel="noreferrer">DEF CON</a>
-          <span className="sepbar">|</span>
-          <span className="tagline">You can't stop the signal</span>
-        </footer>
-*/
 
   render() {
     const sections = this.sectionOrder.map(this.buildSections);

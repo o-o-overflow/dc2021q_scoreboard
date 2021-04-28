@@ -15,7 +15,7 @@ function Navbar(props) {
   if (props.authenticated) {
     tokenLink = (
       <Link className="nav-link" onClick={props.handleLogOut} to="#">
-        Log&nbsp;Out {props.team}
+        Log&nbsp;Out&nbsp;{props.team}
       </Link>
     );
   } else {
@@ -49,7 +49,7 @@ function Navbar(props) {
     </li>
   ));
 
-  // TODO: could I move it to the bottom / make it show on-click?
+  // TODO: could I make it show on mouse movement?
   return (
     <nav className="navbar navbar-expand navbar-dark">
       <Link className="navbar-brand" to="/">

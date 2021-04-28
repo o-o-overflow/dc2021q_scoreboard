@@ -18,9 +18,10 @@ function Rules() {
 
       <h2>Scoring</h2>
       <p>
-        All challenges will be adaptive scoring based on the number of solves:
+        We do adaptive scoring based on the number of solves:
         starting at 500 and decreasing from there (based on the total number of
-        teams that solved the challenge). We{" "}
+        teams that solved the challenge).
+      </p><p>We{" "}
         <a href="https://github.com/o-o-overflow/scoring-playground">
           released a scoring playground
         </a>{" "}
@@ -53,9 +54,10 @@ function Rules() {
       <h2>Hints</h2>
       <p>
         Do not expect hints. Particularly if a service is already pwned, it
-        would be unfair to give one team a hint when it's already solved. If we
+        would be unfair to give one team a hint when it's already solved.
+      </p><p>We do appreciate issue reports and if we
         feel that something is significantly wrong, then we will update the
-        description and tweet about it. If you ask for hints on <del>IRC</del>{" "}
+        description and tweet about it. If you straight up ask for hints on <del>IRC</del>{" "}
         or discord, expect to be referred to this page.
       </p>
 

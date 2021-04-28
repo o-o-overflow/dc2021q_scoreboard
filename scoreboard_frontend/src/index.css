@@ -48,6 +48,7 @@ H2 { color: var(--dc-orange); font-family: conthraxsemibold,monospace; }
     max-width: 1000px; margin: auto; /* centered */
 }
 .rulespage h2 { font-size: 1.3rem; }
+.rulespage code { font-weight: bold; color: inherit; padding: .2rem; background-color: black; }
 
 .chalmenu-footer {
     color: #5a5a5a;

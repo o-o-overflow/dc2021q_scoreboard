@@ -65,14 +65,14 @@ function Rules() {
         Twitter and <del>IRC</del>discord
       </h2>
       <p>
-        All game announcements will be made through our Twitter account{" "}
-        <a href="https://twitter.com/oooverflow">@oooverflow</a>
+        <b>All game announcements will be made through our Twitter account{" "}
+        <a href="https://twitter.com/oooverflow">@oooverflow</a></b>
       </p>
       <p>
         Times change, and we must change with them.
         We're <a href="https://twitter.com/oooverflow/status/1384622113785475072">in hybrid mode</a> like DEF CON and use its official
         discord <a href="https://discord.gg/defcon">discord.gg/defcon</a>.
-        Come hang out in the CTF category (all the way to the bottom).
+        You should hang out with us in the CTF area (all the way to the bottom).
       </p>
 
       <h2>Flag Submission Delay</h2>
@@ -82,7 +82,15 @@ function Rules() {
       <p>There is no limit on team sizes.</p>
 
       <h2>Info on prequals, etc.</h2>
-      See <a href="https://oooverflow.io/dc-ctf-2021-quals/">our main website</a>
+      <p>See <a href="https://oooverflow.io/dc-ctf-2021-quals/">our main website</a>.</p>
+
+      <h2>Who are you anyway?</h2>
+      <p>We are the Order of the Overflow. We are the current host of <a href="https://www.defcon.org/html/links/dc-ctf.html">DEF CON CTF</a> (Quals and Finals).</p>
+      <p>Info about us and our philosophy is <a href="https://oooverflow.io/philosophy.html">here</a> and we're reachable at <a href="mailto:team@oooverflow.io">team@oooverflow.io</a>.</p>
+
+      <h2>OMG I'm insanely confused</h2>
+      <p>It's a hacking competition, and the DEF CON CTF is a hard one at that.</p>
+      <p>You might want to start with something easier, maybe from our <a href="https://archive.ooo">archive</a> -- <a href="https://github.com/o-o-overflow/archiveooo/wiki/FAQ">more info</a>.</p>
     </div>
   );
 }

@@ -48,7 +48,7 @@ class GameMatrix extends React.Component {
     this.challenges.sort();
 
     return (
-      <div className="table-responsive bg-light">
+      <div className="table-responsive">
         <table className="table table-hover table-sm">
           <thead>
             <tr>

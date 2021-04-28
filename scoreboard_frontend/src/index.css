@@ -65,6 +65,7 @@ H2 { color: var(--dc-orange); font-family: conthraxsemibold,monospace; }
     height: 48vw;  /* same unit as the width, should preserve the ratio */
                    /* chrome-only for now: aspect-ratio: 1678 / 908 */
     min-width:  800px; min-height: 433px;  /* Let's not go too small */
+    margin: auto;  /* centered */
 
     /* The map image, stretched to cover the div exactly */
     background: no-repeat url("/pics/map.jpg");
@@ -92,9 +93,9 @@ div.chalname {
     position: absolute;  /* same position as the button */
     padding-top: 12px; padding-left: 60px; /* This should put the text on its right */
     font-family: conthraxsemibold,monospace;
-    cursor: pointer;
     color: white;
 }
+div.chalname label { cursor: pointer; }
 button.challenge:active, button.challenge:focus { opacity: 1; }
 button.challenge-unsolved { box-shadow: 3px 3px 3px red; }
 button.challenge-solved   { box-shadow: 3px 3px 3px green; }

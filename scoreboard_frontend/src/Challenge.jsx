@@ -52,7 +52,7 @@ function Challenge(props) {
       id={id}
     >
     </button>
-    <div style={styles_chalname} className={classes_chalname}><label htmlFor={id}>{id}</label></div>
+    <div style={styles_chalname} className={classes_chalname}><label htmlFor={id} title={tooltip}>{id}</label></div>
     </>
   );
 }

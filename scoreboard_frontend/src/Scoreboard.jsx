@@ -2,15 +2,13 @@ import PropTypes from "prop-types";
 import React from "react";
 
 function categoryIcon(categoryByChallenge, challengeId) {
-  const cssClass = categoryByChallenge[challengeId]
-    .split(",")[0]
-    .replace(/ /g, "-");
+  /* TODO: turn into a per-challenge emoji */
   return (
     <span
-      className={`category-${cssClass}`}
+      className={`scoreboard-chal-span`}
       key={challengeId}
       title={challengeId}
-    />
+    >{challengeId}</span>
   );
 }
 

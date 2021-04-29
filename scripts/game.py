@@ -172,22 +172,6 @@ def log(psql, maxn):
             sleep(5)
 
 
-def last(psql, n, blacklist):
-    with psql.cursor() as cursor2:
-        cursor2.execute(
-            "SELECT solves.date_created, team_name, challenge_id FROM solves,users WHERE solves.user_id = users.id order by solves.date_created desc limit %d;"
-            % n
-        )
-        for time, team, chall in cursor2.fetchall():
-            dontprint = False
-            for no in blacklist:
-                if no in chall:
-                    dontprint = True
-                    break
-            if not dontprint:
-                print("\x1b[32m %35s \x1b[0m from %s" % (chall, team))
-
-
 def solcount(psql):
     with psql.cursor() as cursor2:
         cursor2.execute(

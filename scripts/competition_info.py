@@ -5,43 +5,34 @@ import json
 import pprint
 import sys
 
+from botocore.config import Config
 import boto3
 import psycopg2
 import yaml
 
 
-DB_HOST = {
-    "dev": "sb-dev.cgwgx6ftjwg2.us-east-2.rds.amazonaws.com",
-    "prod": "sb-prod.cgwgx6ftjwg2.us-east-2.rds.amazonaws.com",
-}
+DB_HOST = "sb-{environment}.cgrvtkkg9riu.us-east-2.rds.amazonaws.com"
+ENVIRONMENT = "production"
 
 
-def decrypt_secrets(environment="prod"):
-    session = boto3.session.Session(profile_name="ooo")
-    kms = session.client("kms")
-    with open(
-        "scoreboard_backend/kms-secrets.{}.us-east-2.yml".format(environment)
-    ) as fp:
-        encrypted = yaml.safe_load(fp)["secrets"]["SECRETS"]
-    data = base64.b64decode(encrypted)
-    return json.loads(kms.decrypt(CiphertextBlob=data)["Plaintext"].decode("utf-8"))
+def get_db_password():
+    client = boto3.client("ssm", config=Config(region_name="us-east-2"))
+    return client.get_parameter(Name=f"/{ENVIRONMENT}/db_password", WithDecryption=True)["Parameter"]["Value"]
 
 
 def main():
-    db_password = decrypt_secrets()["DB_PASSWORD"]
-
-    with psql_connection(db_password) as psql:
+    with psql_connection() as psql:
         solves(psql)
 
     return 0
 
 
 @contextmanager
-def psql_connection(db_password, environment="prod"):
+def psql_connection():
     psql = psycopg2.connect(
         dbname="scoreboard",
-        host=DB_HOST[environment],
-        password=db_password,
+        host=DB_HOST.format(environment=ENVIRONMENT),
+        password=get_db_password(),
         user="scoreboard",
     )
     try:

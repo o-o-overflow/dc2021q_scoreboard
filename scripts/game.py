@@ -5,79 +5,71 @@ import json
 import pprint
 import sys
 
+from botocore.config import Config
 import boto3
 import psycopg2
 import yaml
 import datetime
 from time import sleep
 
-DB_HOST = {
-    "dev": "sb-dev.cgwgx6ftjwg2.us-east-2.rds.amazonaws.com",
-    "prod": "sb-production.cgwgx6ftjwg2.us-east-2.rds.amazonaws.com",
-}
 
-ENVIRONMENT = "prod"
-
+DB_HOST = "sb-{environment}.cgrvtkkg9riu.us-east-2.rds.amazonaws.com"
+ENVIRONMENT = "production"
 START_TIME = datetime.datetime(2020, 5, 16, 0, 0, 0, tzinfo=datetime.timezone.utc)
 
-def main(argv):
-    with open("/home/ec2-user/.db.passwd") as fp:
-        db_password = fp.read().strip()
 
-    if len(argv) == 1:
-        with psql_connection(db_password) as psql:
+def get_db_password():
+    client = boto3.client("ssm", config=Config(region_name="us-east-2"))
+    return client.get_parameter(Name="/production/db_password", WithDecryption=True)["Parameter"]["Value"]
+
+
+def main(argv):
+    with psql_connection() as psql:
+        if len(argv) == 1:
             stats(psql)
-    elif argv[1] == "timeline":
-        with psql_connection(db_password) as psql:
+        elif argv[1] == "timeline":
             timeline(psql)
-    elif argv[1] == "solcount":
-        with psql_connection(db_password) as psql:
+        elif argv[1] == "solcount":
             solcount(psql)
-    elif argv[1] == "challs":
-        with psql_connection(db_password) as psql:
+        elif argv[1] == "challs":
             challs_table(psql)
-    elif argv[1] == "teams":
-        with psql_connection(db_password) as psql:
+        elif argv[1] == "teams":
             teams_table(psql)
-    elif argv[1] == "cinfo":
-        if len(argv) != 3:
-            print("You need to specify one challenge id")
-            sys.exit(1)
-        with psql_connection(db_password) as psql:
-            info_chall(psql, argv[2])
-    elif argv[1] == "log":
-        blacklist = []
-        if len(argv) < 3:
-            n = 30
-        else:
-            n = int(argv[2])
-        with psql_connection(db_password) as psql:
-            log(psql, n)
-    elif argv[1] == "tinfo":
-        if len(argv) != 3:
-            print("You need to specify one team id")
-            sys.exit(1)
-        with psql_connection(db_password) as psql:
-            info_team(psql, argv[2])
-#    elif argv[1] == "teacheck":
-#        with psql_connection(db_password) as psql:
-#            teacheck(psql)
-    elif argv[1] == "blood":
-        with psql_connection(db_password) as psql:
+        elif argv[1] == "cinfo":
+            if len(argv) != 3:
+                print("You need to specify one challenge id")
+                sys.exit(1)
+                info_chall(psql, argv[2])
+        elif argv[1] == "log":
+            blacklist = []
+            if len(argv) < 3:
+                n = 30
+            else:
+                n = int(argv[2])
+                log(psql, n)
+        elif argv[1] == "tinfo":
+            if len(argv) != 3:
+                print("You need to specify one team id")
+                sys.exit(1)
+                info_team(psql, argv[2])
+        #    elif argv[1] == "teacheck":
+        #        with psql_connection(db_password) as psql:
+        #            teacheck(psql)
+        elif argv[1] == "blood":
             blood(psql)
-    else:
-        print("\nUse:")
-        print(" %s                     \x1b[33m# Generic Info about the game\x1b[0m" % argv[0])
-        print(" %s challs              \x1b[33m# Info about open challengs\x1b[0m" % argv[0])
-        print(" %s log <threshold>     \x1b[33m# Tail -f the solutions\x1b[0m" % argv[0])
-        print(" %s teams               \x1b[33m# Info about all teams\x1b[0m" % argv[0])
-        print(" %s cinfo <chall>       \x1b[33m# Detailed info about one chall\x1b[0m" % argv[0])
-        print(" %s tinfo <team>        \x1b[33m# Provides info about one team\x1b[0m" % argv[0])
-        print(" %s timeline            \x1b[33m# Prints a hourly timeline of the game\x1b[0m" % argv[0])
-        print(" %s blood               \x1b[33m# First blood \x1b[0m" % argv[0])
-        print(" %s solcount            \x1b[33m# Solutions count \x1b[0m" % argv[0])
-        print("")
-        sys.exit(0)
+        else:
+            print("\nUse:")
+            print(" %s                     \x1b[33m# Generic Info about the game\x1b[0m" % argv[0])
+            print(" %s challs              \x1b[33m# Info about open challengs\x1b[0m" % argv[0])
+            print(" %s log <threshold>     \x1b[33m# Tail -f the solutions\x1b[0m" % argv[0])
+            print(" %s teams               \x1b[33m# Info about all teams\x1b[0m" % argv[0])
+            print(" %s cinfo <chall>       \x1b[33m# Detailed info about one chall\x1b[0m" % argv[0])
+            print(" %s tinfo <team>        \x1b[33m# Provides info about one team\x1b[0m" % argv[0])
+            print(" %s timeline            \x1b[33m# Prints a hourly timeline of the game\x1b[0m" % argv[0])
+            print(" %s blood               \x1b[33m# First blood \x1b[0m" % argv[0])
+            print(" %s solcount            \x1b[33m# Solutions count \x1b[0m" % argv[0])
+            print("")
+            sys.exit(0)
 
     return 0
 
@@ -98,11 +90,11 @@ def diff_string(diff):
 
 
 @contextmanager
-def psql_connection(db_password):
+def psql_connection():
     psql = psycopg2.connect(
         dbname="scoreboard",
-        host=DB_HOST[ENVIRONMENT],
-        password=db_password,
+        host=DB_HOST.format(environment=ENVIRONMENT),
+        password=get_db_password(),
         user="scoreboard",
     )
     try:

@@ -17,7 +17,9 @@ ENVIRONMENT = "production"
 
 def get_db_password():
     client = boto3.client("ssm", config=Config(region_name="us-east-2"))
-    return client.get_parameter(Name=f"/{ENVIRONMENT}/db_password", WithDecryption=True)["Parameter"]["Value"]
+    return client.get_parameter(
+        Name=f"/{ENVIRONMENT}/db_password", WithDecryption=True
+    )["Parameter"]["Value"]
 
 
 def main():

@@ -53,6 +53,28 @@ data "aws_iam_policy_document" "oai-read-bucket" {
   }
 }
 
+data "aws_iam_policy_document" "util-assume-role-policy" {
+   statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "util-policy" {
+  statement {
+    actions = [
+      "ssm:GetParameter"
+    ]
+    resources = [
+      aws_ssm_parameter.db-password.arn
+    ]
+  }
+}
+
 data "aws_route53_zone" "oooverflow-io" {
   name = "oooverflow.io."
 }
@@ -270,11 +292,33 @@ resource "aws_eip" "eip" {
   vpc        = true
 }
 
+resource "aws_iam_instance_profile" "util-access" {
+  name = "scoreboard-${var.environment}-util-access"
+  role = aws_iam_role.util-access.name
+}
+
+resource "aws_iam_policy" "util-access" {
+  name   = "scoreboard-${var.environment}-util-access"
+  path   = "/ec2/"
+  policy = data.aws_iam_policy_document.util-policy.json
+}
+
 resource "aws_iam_role" "lambda-http-auth" {
   assume_role_policy = data.aws_iam_policy_document.lambda-assume-role-policy.json
   count              = var.environment == "development" ? 1 : 0
   name               = "instance_role"
   path               = "/service-role/"
+}
+
+resource "aws_iam_role" "util-access" {
+  assume_role_policy = data.aws_iam_policy_document.util-assume-role-policy.json
+  name               = "scoreboard-${var.environment}-util-access"
+  path               = "/service-role/"
+}
+
+resource "aws_iam_role_policy_attachment" "util-access" {
+  policy_arn = aws_iam_policy.util-access.arn
+  role       = aws_iam_role.util-access.name
 }
 
 resource "aws_instance" "util" {
@@ -283,6 +327,7 @@ resource "aws_instance" "util" {
   availability_zone           = "us-east-2a"
   depends_on                  = [aws_internet_gateway.gateway]
   disable_api_termination     = false
+  iam_instance_profile        = aws_iam_instance_profile.util-access.name
   instance_type               = "t3.nano"
   key_name                    = "bboe"
   subnet_id                   = aws_subnet.public.0.id

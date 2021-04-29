@@ -24,6 +24,11 @@ class ChallengeModal extends React.Component {
         this.setState((state, props) => ({ status: `${state.status}` }));
       }
     };
+
+    const possible_challenge_objects = this.props.challenges['haiku']
+          .filter(o => o.id === this.props.challengeId);
+    console.assert(possible_challenge_objects.length === 1);
+    this.my_challenge_object = possible_challenge_objects[0];
   }
 
   componentDidMount() {

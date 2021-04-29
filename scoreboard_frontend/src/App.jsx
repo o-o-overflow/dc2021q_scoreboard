@@ -217,6 +217,7 @@ class App extends React.Component {
         solved: (solvesByTeam[this.state.team] || []).includes(id),
         tags,
       };
+      console.assert(category === "haiku");
       if (category in challenges) {
         challenges[category].push(object);
       } else {
@@ -337,6 +338,7 @@ class App extends React.Component {
                 this.state.solvesByChallenge[this.state.showChallengeId] || 0
               }
               token={this.state.accessToken}
+              challenges={this.state.challenges}
             />
           </ReactModal>
         </main>

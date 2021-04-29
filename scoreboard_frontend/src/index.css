@@ -33,6 +33,7 @@
 
     font-display: block; /* wait indefinitely to replace, avoid flashing unstyled text if possible */
 }
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap'); /* Didact Gothic serves as a replacement for Futura */
 
 
 BODY {
@@ -49,6 +50,8 @@ H1, H2 { color: var(--dc-orange); font-family: conthraxsemibold,monospace; }
     color: var(--dc-text);
     padding: 1em;
     max-width: 1000px; margin: auto; /* centered */
+    font-family: 'Didact Gothic',Ubuntu,Candara,Roboto,sans-serif;
+    font-size: 120%;
 }
 .rulespage h2 { font-size: 1.3rem; }
 .rulespage code { font-weight: bold; color: inherit; padding: .2rem; background-color: #333; }
@@ -149,7 +152,7 @@ table.table thead th { border-top: none; position: sticky; top: 0; }
 
 .sticky-left { position: sticky; left: 0; } /* Used in the solves table */
 td.solves-td-no { color: #666; }
-.scoreboard-chal-span { padding-right: 1em; }
+.scoreboard-chal-span { padding-right: 1em; font-family: 'Didact Gothic',sans-serif; } /* TODO: emoji / something smaller / cut the text */
 
 
 .alert-secondary {  /* Computing, sent, etc. */

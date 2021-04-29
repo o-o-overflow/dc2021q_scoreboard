@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-from contextlib import contextmanager
-import base64
-import json
 import pprint
 import sys
+from contextlib import contextmanager
 
-from botocore.config import Config
 import boto3
 import psycopg2
-import yaml
-
+from botocore.config import Config
 
 DB_HOST = "sb-{environment}.cgrvtkkg9riu.us-east-2.rds.amazonaws.com"
 ENVIRONMENT = "production"

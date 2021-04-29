@@ -1,17 +1,12 @@
 #!/usr/bin/env python3
+import datetime
+import sys
 from contextlib import contextmanager
 from time import sleep
-import base64
-import json
-import pprint
-import sys
 
-from botocore.config import Config
 import boto3
 import psycopg2
-import yaml
-import datetime
-
+from botocore.config import Config
 
 DB_HOST = "sb-{environment}.cgrvtkkg9riu.us-east-2.rds.amazonaws.com"
 ENVIRONMENT = "production"
@@ -43,7 +38,6 @@ def main(argv):
                 sys.exit(1)
                 info_chall(psql, argv[2])
         elif argv[1] == "log":
-            blacklist = []
             if len(argv) < 3:
                 n = 30
             else:
@@ -190,7 +184,7 @@ def last(psql, n, blacklist):
                 if no in chall:
                     dontprint = True
                     break
-            if dontprint == False:
+            if not dontprint:
                 print("\x1b[32m %35s \x1b[0m from %s" % (chall, team))
 
 
@@ -231,7 +225,7 @@ def info_team(psql, team):
                     (name, team_id),
                 )
                 when = cursor2.fetchone()
-                if when == None:
+                if when is None:
                     when = "   -"
                 else:
                     diff = now - when[0]
@@ -355,7 +349,7 @@ def challs_table(psql):
                     "SELECT count(*) FROM submissions WHERE challenge_id=%s;", (name,)
                 )
                 (wrong,) = cursor2.fetchone()
-            if last == None:
+            if last is None:
                 last = "   -"
             else:
                 diff = now - last
@@ -507,7 +501,7 @@ def teams_table(psql):
         )
         for last, solved, team in cursor.fetchall():
             now = datetime.datetime.now(datetime.timezone.utc)
-            if last == None:
+            if last is None:
                 last = "   -"
             else:
                 diff = now - last

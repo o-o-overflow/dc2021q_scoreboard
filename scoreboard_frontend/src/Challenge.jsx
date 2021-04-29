@@ -4,9 +4,10 @@ import React from "react";
 
 /* This is how they all appear together on the homepage -- see ChallengeModal for the dialog box */
 
+/* XXX: TO REMOVE TAGS: remove them from the tooltip */
 
 function Challenge(props) {
-  const { authenticated, id, item_index, points, solved } = props;
+  const { authenticated, id, item_index, points, solved, tags } = props;
 
   let onClick = null;
   let classes = "challenge";
@@ -36,11 +37,15 @@ function Challenge(props) {
     styles.backgroundImage = `url('/pics/radio_red.svg')`;
   }
 
-  // TODO: better tooltip
-  let tooltip = "" + id + "\nCurrently " + points + " points";
+  const tag_names = tags.split(",").map((tag, index) => {
+    return tag.trim();
+  }).join(' | ');
+
+  let tooltip = "" + id + "\nCurrently " + points + " points"
+        + "\n" + tag_names;
 
 
-  // TODO: make div and position both inside it?
+  // XXX: make div and position both inside it?
   return (
     <>
     <button

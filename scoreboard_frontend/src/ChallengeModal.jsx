@@ -3,6 +3,8 @@ import exact from "prop-types-exact";
 import React from "react";
 import showdown from "showdown";
 
+/* XXX: TO REMOVE TAGS: remove the tagthingy */
+
 class ChallengeModal extends React.Component {
   constructor(props) {
     super(props);
@@ -194,6 +196,12 @@ class ChallengeModal extends React.Component {
       );
     }
 
+    const my_tags = this.my_challenge_object.tags;
+    const tag_spans = my_tags.split(",").map((tag, index) => {
+        return (<span className="tag-boxy-thing">{`${tag.trim()}`}</span>);
+    });
+    const tagthingy = (<div className="tagthingy">{tag_spans}</div>);
+
     let form_submission = "";
 
     if (!this.props.solved) {
@@ -252,6 +260,7 @@ class ChallengeModal extends React.Component {
           </div>
           <div className="modal-body">
             <div dangerouslySetInnerHTML={{ __html: this.state.description }} />
+            {tagthingy}
             {status}
           </div>
           <div className="modal-footer">

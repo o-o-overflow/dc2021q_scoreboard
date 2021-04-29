@@ -9,6 +9,7 @@
 
     --dc-blue-ligther:  #a1cbf2; /* my ligther variation on dc's color */
     --dc-green-ligther: #8bdf99;
+    --dc-red-darker: #701e10;
 
     /* our own theme, sort of */
     --ooo-dark: #222b2f;
@@ -125,6 +126,18 @@ div.chalname-solved       { text-shadow: 3px 3px 3px green; }
 .modal-footer button { font-family: conthraxsemibold,monospace; }
 /* btn-secondary */
 .already-solved-msg { padding-right: 1em; color: var(--dc-green); }
+.tagthingy { text-align: right; }
+span.tag-boxy-thing { /* from the archive */
+    background-color: var(--dc-red-darker);
+    /*border: var(--dc-red) 1px solid;*/
+    color: var(--dc-text);
+    padding: 0.2em 0.4em;
+    vertical-align: middle;
+    font-size: 80%;
+    display: inline-block;
+    margin-left: .5rem;
+    font-family: conthraxsemibold, monospace;
+}
 
 .modal-body { overflow: auto; overflow-wrap: anywhere; }  /* these were already there */
 .modal-content { max-height: 80vh; overflow-y: auto; }

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import exact from "prop-types-exact";
 import React from "react";
 
-import { split_out_special_tags } from "./utils.js";
+import { split_out_special_tags, get_emoji } from "./utils.js";
 
 /* This is how they all appear together on the homepage -- see ChallengeModal for the dialog box */
 
@@ -66,7 +66,7 @@ function Challenge(props) {
     styles.backgroundImage = `url('/pics/radio_red.svg')`;
   }
 
-  let tooltip = "" + id + "\nCurrently " + points + " points"
+  let tooltip = get_emoji(special_attrs, item_index) + " " + id + "\nCurrently " + points + " points"
         + "\n" + normal_tags.join(' | ');
 
 

@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import exact from "prop-types-exact";
 import React from "react";
 
+import { split_out_special_tags } from "./utils.js";
+
 /* This is how they all appear together on the homepage -- see ChallengeModal for the dialog box */
 
 /* XXX: TO REMOVE TAGS: remove them from the tooltip */
@@ -48,27 +50,7 @@ function Challenge(props) {
   }
   onClick = () => props.onClick(props);
 
-  const normal_tags = tags.split(",")
-    .map((tag, index) => { return tag.trim(); })
-    .filter((tag) => !tag.startsWith("--"));
-  const special_tags = tags.split(",")
-    .map((tag, index) => { return tag.trim(); })
-    .filter((tag) => tag.startsWith("--"));
-
-  // tag "--special-key-value" --> special_attrs[key] = value
-  // this is icky, but doesn't require changing the db
-  // or hardcoding things in javascript
-  const special_attrs = new Map();
-  for (let i = 0; i < special_tags.length; i++) {
-    const tag = special_tags[i];
-    console.assert(tag.startsWith("--special-"), tag);
-    const x = tag.replace("--special-",'').split('-')
-    console.assert(x.length === 2, x.length, x);
-    const key = x[0].trim(), val = x[1].trim();
-    console.assert(!special_attrs.has(key), key, special_attrs);
-    special_attrs.set(key, val);
-  }
-
+  const [normal_tags, special_attrs] = split_out_special_tags(tags);
 
   const [my_pos_top, my_pos_left] = get_chal_pos(id, item_index, special_attrs);
   let styles = { 'top': my_pos_top, 'left': my_pos_left };

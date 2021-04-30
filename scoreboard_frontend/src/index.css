@@ -130,7 +130,7 @@ div.chalname-solved       { text-shadow: 3px 3px 3px green; }
 .modal-footer button { font-family: conthraxsemibold,monospace; }
 /* btn-secondary */
 .already-solved-msg { padding-right: 1em; color: var(--dc-green); }
-.tagthingy { text-align: right; margin-bottom: 1em; margin-top: 0.5em; }
+.tagthingy { text-align: right; margin-top: 0.5em; }
 .grantsline { text-align: right; margin-bottom: 1em; margin-top: 0.5em; }
 .grantsline .emojifont { padding-left: .3em; padding-right: .3em; font-size: 1.5rem; }
 span.tag-boxy-thing { /* from the archive */

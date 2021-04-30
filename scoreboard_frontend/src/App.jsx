@@ -320,6 +320,7 @@ class App extends React.Component {
                 solvesByChallenge={this.state.solvesByChallenge}
                 teamScoreboardOrder={this.state.teamScoreboardOrder}
                 tagsByChallenge={this.state.tagsByChallenge}
+                pointsByChallenge={this.state.pointsByChallenge}
               />
             )}
           />

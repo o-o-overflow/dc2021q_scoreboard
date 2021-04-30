@@ -21,7 +21,8 @@ class GameMatrix extends React.Component {
       return (
         <th key={id} scope="row" title={id}>
           <span className="solves-header-emoji">{this.props.tagsByChallenge[id][1].get('emoji')}</span>
-          ({this.props.solvesByChallenge[id] || 0})
+          ({this.props.solvesByChallenge[id] || 0})<br/>
+          <span className="solves-header-points">{this.props.pointsByChallenge[id]}</span>
         </th>
       );
     });

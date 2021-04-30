@@ -3,6 +3,15 @@ import React from "react";
 function Rules() {
   return (
     <div className="rulespage">
+
+      <h2>Rules Philosophy</h2>
+      <p>
+        Our goal is to run a challenging CTF that is as fair as possible. In that spirit, we present the rules, with the goal of keeping things fair, and hopefully fun. 
+      </p>
+      <p>
+        We hope that you play with the spirit of competition and adopt a competitive, fair play, and positive sports(person/man/women)ship attitude. 
+      </p>
+
       <h2>Basic Rules</h2>
       <ul>
         <li>
@@ -27,9 +36,16 @@ function Rules() {
         </a>{" "}
         so that teams with questions or concerns about the exact scoring
         algorithm can see how that affects the overall ranking.
+          </p>
+
+      <h2>Shortcut Solutions</h2>
+      <p>
+        We strive to develop challenges that stretch and test everyone's skills. We also test the challenges to ensure that there's ~one intended path/solution. 
       </p>
 
-
+      <p>
+        Unfortunately, we are human and mistakes happen. Our policy will be: if we see that a challenge has been solved within two hours of launch by a "shortcut solution" (that we decide at our discretion), then we might release an updated version. If a shortcut solution is found after the two hours, then we will not release an updated version.
+      </p>
       <h2>Flag Format</h2>
       <p>
         Unless otherwise noted, all flags will be in the format: <code>OOO&#123;…&#125;</code>
@@ -41,6 +57,11 @@ function Rules() {
             <code>OOO&#123;…&#125;</code>.
           </em>
         </strong>
+      </p>
+
+      <h2>Flag Location</h2>
+      <p>
+        Unless otherwise noted in the challenge description, all flags will be located at: <code>/flag</code>
       </p>
 
       <h2>Proof of Work (POW)</h2>
@@ -57,12 +78,20 @@ function Rules() {
         would be unfair to give one team a hint when it's already solved.
       </p><p>We do appreciate issue reports and if we
         feel that something is significantly wrong, then we will update the
-        description and tweet about it. If you straight up ask for hints on <del>IRC</del>{" "}
-        or discord, expect to be referred to this page.
+        description and tweet about it. If you straight up ask for hints on 
+        Discord, expect to be referred to this page.
+          </p>
+
+      <p>
+        The one exception to this rule is any challenge marked with
+        the tag <code>easy</code>. These challenges are (in our
+        estimation) on the easy side, and we will hint and help people
+        on these challenges. There will only be a few challenges
+        marked <code>easy</code>.
       </p>
 
       <h2>
-        Twitter and <del>IRC</del>discord
+        Twitter and Discord
       </h2>
       <p>
         <b>All game announcements will be made through our Twitter account{" "}
@@ -70,9 +99,9 @@ function Rules() {
       </p>
       <p>
         Times change, and we must change with them.
-        We're <a href="https://twitter.com/oooverflow/status/1384622113785475072">in hybrid mode</a> like DEF CON and use its official
+        We're using the official DEF CON
         discord <a href="https://discord.gg/defcon">discord.gg/defcon</a>.
-        You should hang out with us in the CTF area (all the way to the bottom).
+        You should hang out with us in the CTF area.
       </p>
 
       <h2>Flag Submission Delay</h2>
@@ -90,7 +119,7 @@ function Rules() {
 
       <h2>OMG I'm insanely confused</h2>
       <p>It's a hacking competition, and the DEF CON CTF is a hard one at that.</p>
-      <p>You might want to start with something easier, maybe from our <a href="https://archive.ooo">archive</a> -- <a href="https://github.com/o-o-overflow/archiveooo/wiki/FAQ">more info</a>.</p>
+      <p>You might want to start with something easier, maybe from our <a href="https://archive.ooo">archive</a> -- <a href="https://github.com/o-o-overflow/archiveooo/wiki/FAQ">more info</a> or <a href="https://pwn.college">start your hacking journey at pwn.college</a>.</p>
     </div>
   );
 }

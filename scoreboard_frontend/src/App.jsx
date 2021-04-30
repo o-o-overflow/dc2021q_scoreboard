@@ -37,6 +37,7 @@ class App extends React.Component {
       showChallengeId: "",
       showModal: null,
       solvesByTeam: {},
+      tagsByChallenge: {},
       team: window.localStorage.getItem(LOCAL_STORAGE_TEAM) || "",
       teams: {},
       teamScoreboardOrder: [],
@@ -205,10 +206,12 @@ class App extends React.Component {
       }
     });
 
-    const pointsByChallenge = {};
     const challenges = {};
+    const pointsByChallenge = {};
+    const tagsByChallenge = {};
     data.open.forEach(([id, tags, category, _openTime]) => {
       this.categoryByChallenge[id] = tags;
+      tagsByChallenge[id] = tags;
       pointsByChallenge[id] = challengePoints(solvesByChallenge[id], category);
 
       const object = {
@@ -251,16 +254,17 @@ class App extends React.Component {
       challenges,
       lastSolveTimeByTeam,
       pointsByTeam,
-      teamScoreboardOrder,
       solvesByTeam,
       solvesByChallenge,
+      tagsByChallenge,
+      teamScoreboardOrder,
       unopened: data.unopened_by_category,
     });
   };
 
   render() {
-    const teamSolves = this.state.solvesByTeam[this.state.team] || [];
-    const solved = teamSolves.includes(this.state.showChallengeId);
+    const solved = (this.state.solvesByTeam[this.state.team] || []).includes(this.state.showChallengeId);
+    const tags = this.state.tagsByChallenge[this.state.showChallengeId] || "";
     return (
       <>
         <Navbar
@@ -337,8 +341,8 @@ class App extends React.Component {
               numSolved={
                 this.state.solvesByChallenge[this.state.showChallengeId] || 0
               }
+              tags={tags}
               token={this.state.accessToken}
-              challenges={this.state.challenges}
             />
           </ReactModal>
         </main>

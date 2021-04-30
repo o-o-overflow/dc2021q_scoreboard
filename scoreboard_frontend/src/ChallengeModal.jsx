@@ -26,11 +26,6 @@ class ChallengeModal extends React.Component {
         this.setState((state, props) => ({ status: `${state.status}` }));
       }
     };
-
-    const possible_challenge_objects = this.props.challenges['haiku']
-          .filter(o => o.id === this.props.challengeId);
-    console.assert(possible_challenge_objects.length === 1);
-    this.my_challenge_object = possible_challenge_objects[0];
   }
 
   componentDidMount() {
@@ -196,9 +191,8 @@ class ChallengeModal extends React.Component {
       );
     }
 
-    const my_tags = this.my_challenge_object.tags;
-    const tag_spans = my_tags.split(",").map((tag, index) => {
-        return (<span className="tag-boxy-thing">{`${tag.trim()}`}</span>);
+    const tag_spans = this.props.tags.split(",").map((tag, index) => {
+        return (<span className="tag-boxy-thing" key={index}>{`${tag.trim()}`}</span>);
     });
     const tagthingy = (<div className="tagthingy">{tag_spans}</div>);
 
@@ -285,6 +279,7 @@ ChallengeModal.propTypes = exact({
   onTokenExpired: PropTypes.func.isRequired,
   solved: PropTypes.bool.isRequired,
   numSolved: PropTypes.number.isRequired,
+  tags: PropTypes.string.isRequired,
   token: PropTypes.string.isRequired,
 });
 export default ChallengeModal;

@@ -72,7 +72,7 @@ def main():
             "..",
             "..",
             "..",
-            "chalmanager",
+            "dc2021q-chalmanager",
             "scoreboard.json",
         )
     )

@@ -58,7 +58,7 @@ function Navbar(props) {
       <div className="navbar-collapse">
         <ul className="navbar-nav mr-auto">
             {leftLinks}
-            <li className="nav-item" key="Chat"><a className="nav-link" href="https://discord.gg/defcon" target="_blank" rel="noopener noreferrer">Chat</a></li>
+            <li className="nav-item" key="Chat"><a className="nav-link" href="https://discord.gg/defcon" target="_blank" rel="noopener noreferrer" title="CTF area at the bottom">Chat</a></li>
         </ul>
         <ul className="navbar-nav ml-auto">
             <li className="nav-item"><a className="nav-link" href="https://twitter.com/oooverflow" target="_blank" rel="noopener noreferrer">OOO</a></li>

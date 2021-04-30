@@ -190,12 +190,21 @@ class ChallengeModal extends React.Component {
       );
     }
 
-    const tag_spans = this.props.tags.split(",")
-      .filter((tag) => !tag.trim().startsWith("--"))
-      .map((tag, index) => {
+    const [normal_tags, special_attrs] = this.props.tags;
+    const tag_spans = normal_tags.map((tag, index) => {
         return (<span className="tag-boxy-thing" key={index}>{`${tag.trim()}`}</span>);
       });
     const tagthingy = (<div className="tagthingy">{tag_spans}</div>);
+
+    const my_emoji = special_attrs.get('emoji')
+    const my_points = "TODO";
+    const emojispan = (<span className="emojifont">{`${my_emoji}`}</span>);
+    const grantsline = (
+        <div className="grantsline">
+          {`This station grants`}
+          {emojispan}
+          {`and currently ${my_points} points`}
+        </div>);
 
     let form_submission = "";
 
@@ -256,6 +265,7 @@ class ChallengeModal extends React.Component {
           <div className="modal-body">
             <div dangerouslySetInnerHTML={{ __html: this.state.description }} />
             {tagthingy}
+            {grantsline}
             {status}
           </div>
           <div className="modal-footer">
@@ -280,7 +290,7 @@ ChallengeModal.propTypes = exact({
   onTokenExpired: PropTypes.func.isRequired,
   solved: PropTypes.bool.isRequired,
   numSolved: PropTypes.number.isRequired,
-  tags: PropTypes.string.isRequired,
+  tags: PropTypes.array.isRequired,
   token: PropTypes.string.isRequired,
 });
 export default ChallengeModal;

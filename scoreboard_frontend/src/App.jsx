@@ -9,6 +9,8 @@ import Navbar from "./Navbar";
 import Rules from "./Rules";
 import Scoreboard from "./Scoreboard";
 
+import { split_normal_and_special_tags, EMPTY_SPLIT_TAGS } from "./utils.js";
+
 ReactModal.setAppElement("#root");
 
 const LOCAL_STORAGE_ACCESS_TOKEN = "dc29_access_token";
@@ -43,7 +45,6 @@ class App extends React.Component {
       teamScoreboardOrder: [],
       unopened: {},
     };
-    this.categoryByChallenge = {};
   }
 
   componentDidMount() {
@@ -209,16 +210,20 @@ class App extends React.Component {
     const challenges = {};
     const pointsByChallenge = {};
     const tagsByChallenge = {};
+    let ordinal_index_for_fallbacks = 0;  // ugly, but we need something unique for fallback
     data.open.forEach(([id, tags, category, _openTime]) => {
-      this.categoryByChallenge[id] = tags;
-      tagsByChallenge[id] = tags;
+      const split_tags = split_normal_and_special_tags(tags, ordinal_index_for_fallbacks);
+      //console.log("loading chal",id, "->",split_tags);
+      ordinal_index_for_fallbacks++;
+
+      tagsByChallenge[id] = split_tags;
       pointsByChallenge[id] = challengePoints(solvesByChallenge[id], category);
 
       const object = {
         id,
         points: pointsByChallenge[id],
         solved: (solvesByTeam[this.state.team] || []).includes(id),
-        tags,
+        tags: split_tags,
       };
       console.assert(category === "haiku", category);
       if (category in challenges) {
@@ -264,7 +269,7 @@ class App extends React.Component {
 
   render() {
     const solved = (this.state.solvesByTeam[this.state.team] || []).includes(this.state.showChallengeId);
-    const tags = this.state.tagsByChallenge[this.state.showChallengeId] || "";
+    const tags = this.state.tagsByChallenge[this.state.showChallengeId] || EMPTY_SPLIT_TAGS;
     return (
       <>
         <Navbar
@@ -293,7 +298,7 @@ class App extends React.Component {
             path="/scoreboard"
             render={() => (
               <Scoreboard
-                categoryByChallenge={this.categoryByChallenge}
+                tagsByChallenge={this.state.tagsByChallenge}
                 lastSolveTimeByTeam={this.state.lastSolveTimeByTeam}
                 pointsByTeam={this.state.pointsByTeam}
                 solvesByTeam={this.state.solvesByTeam}

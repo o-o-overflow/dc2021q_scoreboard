@@ -115,6 +115,7 @@ div.chalname-solved       { text-shadow: 3px 3px 3px green; }
 
 .modal-dialog { opacity: 0.9; }
 .modal-header { font-family: conthraxsemibold,monospace; background-color: var(--ooo-dark); color: var(--dc-yellow); }
+.emojifont { font-family: emoji, sans-serif; }
 .modal-title { font-size: 1.8rem; }
 .modal-header button { color: white; }
 .modal-body { font-family: monospace; background-color: var(--ooo-dark); color: #ddd; font-size: 110%; }
@@ -129,7 +130,9 @@ div.chalname-solved       { text-shadow: 3px 3px 3px green; }
 .modal-footer button { font-family: conthraxsemibold,monospace; }
 /* btn-secondary */
 .already-solved-msg { padding-right: 1em; color: var(--dc-green); }
-.tagthingy { text-align: right; }
+.tagthingy { text-align: right; margin-bottom: 1em; margin-top: 0.5em; }
+.grantsline { text-align: right; margin-bottom: 1em; margin-top: 0.5em; }
+.grantsline .emojifont { padding-left: .3em; padding-right: .3em; font-size: 1.5rem; }
 span.tag-boxy-thing { /* from the archive */
     background-color: var(--dc-red-darker);
     /*border: var(--dc-red) 1px solid;*/
@@ -140,7 +143,7 @@ span.tag-boxy-thing { /* from the archive */
     display: inline-block;
     margin-left: .5rem;
     font-family: conthraxsemibold, monospace;
-    margin-bottom: 1em;
+    margin-bottom: 0.3em;
 }
 
 .modal-body { overflow: auto; overflow-wrap: anywhere; }  /* these were already there */
@@ -153,7 +156,7 @@ table.table thead th { border-top: none; position: sticky; top: 0; }
 
 .sticky-left { position: sticky; left: 0; } /* Used in the solves table */
 td.solves-td-no { color: #666; }
-.scoreboard-chal-span { padding-right: 1em; font-family: 'Didact Gothic',sans-serif; } /* TODO: emoji / something smaller / cut the text */
+.scoreboard-chal-span { padding-right: 1em; font-family: emoji,sans-serif; }
 
 
 .alert-secondary {  /* Computing, sent, etc. */
@@ -162,8 +165,8 @@ td.solves-td-no { color: #666; }
     background-color: var(--dc-red);  /* overridden in ChallengeModal if specific messages are received */
     border-color: var(--dc-red);
 }
-.modal-body .alert-success { background-color: green; border-color: green; }
-.modal-body .alert-danger { border-color: red; background-color: var(--dc-red); }
+.modal-body .alert-success { background-color: green; border-color: green; color: white; }
+.modal-body .alert-danger { border-color: red; background-color: var(--dc-red); color: white; }
 
 
 .ReactModal__Overlay {

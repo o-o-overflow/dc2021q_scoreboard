@@ -1,14 +1,17 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-function categoryIcon(categoryByChallenge, challengeId) {
-  /* TODO: turn into a per-challenge emoji */
+function chalIcon(challengeId, tagsByChallenge) {
+  const x = tagsByChallenge[challengeId];
+  console.assert(x.length === 2, tagsByChallenge, challengeId, x);
+  const special_attrs = x[1];
+  const my_emoji = special_attrs.get('emoji');
   return (
     <span
       className={`scoreboard-chal-span`}
       key={challengeId}
       title={challengeId}
-    >{challengeId}</span>
+    >{my_emoji}</span>
   );
 }
 
@@ -20,7 +23,7 @@ function Scoreboard(props) {
     num: num++,
     points: props.pointsByTeam[team.name],
     solves: team.solves.map((id) =>
-      categoryIcon(props.categoryByChallenge, id)
+      chalIcon(id, props.tagsByChallenge)
     ),
   }));
 
@@ -82,7 +85,7 @@ function Scoreboard(props) {
   );
 }
 Scoreboard.propTypes = {
-  categoryByChallenge: PropTypes.objectOf(PropTypes.string).isRequired,
+  tagsByChallenge: PropTypes.objectOf(PropTypes.array).isRequired,
   lastSolveTimeByTeam: PropTypes.objectOf(PropTypes.number).isRequired,
   pointsByTeam: PropTypes.objectOf(PropTypes.number).isRequired,
   solvesByTeam: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string))

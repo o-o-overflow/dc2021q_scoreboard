@@ -18,7 +18,7 @@ function ChallengeSection(props) {
         authenticated={props.authenticated}
         key={challenge.id}
         onClick={props.onClick}
-        item_index={index}
+        //item_index={index}
       />
     );
   });

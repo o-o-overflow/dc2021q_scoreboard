@@ -47,8 +47,8 @@ function Rules() {
       <p>
         We may implement a POW in front of a challenge if we feel it is
         necessary.
-
-        <p>Please don't make it necessary</p>
+        </p><p>
+        Please don't make it necessary
       </p>
 
       <h2>Hints</h2>

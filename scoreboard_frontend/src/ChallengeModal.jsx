@@ -190,9 +190,11 @@ class ChallengeModal extends React.Component {
       );
     }
 
-    const tag_spans = this.props.tags.split(",").map((tag, index) => {
+    const tag_spans = this.props.tags.split(",")
+      .filter((tag) => !tag.trim().startsWith("--"))
+      .map((tag, index) => {
         return (<span className="tag-boxy-thing" key={index}>{`${tag.trim()}`}</span>);
-    });
+      });
     const tagthingy = (<div className="tagthingy">{tag_spans}</div>);
 
     let form_submission = "";

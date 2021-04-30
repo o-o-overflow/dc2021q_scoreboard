@@ -7,11 +7,6 @@ import React from "react";
 /* XXX: TO REMOVE TAGS: remove them from the tooltip */
 
 
-const PRESET_CHAL_POSITIONS = {
-    0: ["37%","48%"],  // ~= Milan
-    1: ["42%","14%"],  // ~= socal
-}
-
 function rnd_float(seed)
 {
     /* from v8 -- Robert Jenkins' 32 bit integer hash function.
@@ -35,9 +30,9 @@ function random_map_pct(seed)
 function get_chal_pos(id, item_index)
 {
     /* If we have a preference, use it */
-    var preset = PRESET_CHAL_POSITIONS[item_index];
-    if (preset)
-        return preset;
+    //TODO special tags
+    //if (preset)
+    //    return preset;
     /* Otherwise make one up, hoping it won't collide */
     /* Doesn't work that well, we should try not to use it */
     return [
@@ -72,9 +67,10 @@ function Challenge(props) {
     styles.backgroundImage = `url('/pics/radio_red.svg')`;
   }
 
-  const tag_names = tags.split(",").map((tag, index) => {
-    return tag.trim();
-  }).join(' | ');
+  const tag_names = tags.split(",")
+    .map((tag, index) => { return tag.trim(); })
+    .filter((tag) => !tag.startsWith("--"))
+    .join(' | ');
 
   let tooltip = "" + id + "\nCurrently " + points + " points"
         + "\n" + tag_names;

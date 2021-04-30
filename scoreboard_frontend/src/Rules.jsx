@@ -81,6 +81,13 @@ function Rules() {
       <h2>Team Size</h2>
       <p>There is no limit on team sizes.</p>
 
+      <h2>Public pcaps</h2>
+      <p>We collect pcaps for almost all challenges. They will be relased after the game, anonymized.</p>
+      <p>You can find your own traffic (after the fact).
+        To do so, during the game, run <code>nc -v my-pcap-ip.oooverflow.io 5000</code></p>
+      <p>If you use multiple IPs to connect to the game, remember to run that command from all of them.</p>
+
+
       <h2>Info on prequals, etc.</h2>
       <p>See <a href="https://oooverflow.io/dc-ctf-2021-quals/">our main website</a>.</p>
 

@@ -23,7 +23,7 @@ class ChallengeModal extends React.Component {
       if (message.data.complete) {
         this.submit(message.data.nonce);
       } else {
-        this.setState((state, props) => ({ status: `${state.status}` }));
+        this.setState((state, props) => ({ status: `${state.status} .` }));
       }
     };
   }

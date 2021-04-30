@@ -1,29 +1,29 @@
 functions:
-  # challenge:
-  #   events:
-  #     - http:
-  #         cors: true
-  #         method: GET
-  #         path: challenge/{id}/{token}
-  #         request:
-  #           parameters:
-  #             paths:
-  #               id: true
-  #               token: true
-  #   handler: handler.challenge
+  challenge:
+    events:
+      - http:
+          cors: true
+          method: GET
+          path: challenge/{id}/{token}
+          request:
+            parameters:
+              paths:
+                id: true
+                token: true
+    handler: handler.challenge
   challenge_delete:
     handler: handler.challenge_delete
   challenge_open:
     handler: handler.challenge_open
   challenge_update:
     handler: handler.challenge_update
-  # challenges:
-  #   events:
-  #     - http:
-  #         cors: true
-  #         method: GET
-  #         path: challenges
-  #   handler: handler.challenges
+  challenges:
+    events:
+      - http:
+          cors: true
+          method: GET
+          path: challenges
+    handler: handler.challenges
   challenges_add:
     handler: handler.challenges_add
   challenges_set:
@@ -32,36 +32,36 @@ functions:
     handler: handler.migrate
   ping:
     handler: handler.ping
-  # submit:
-  #   events:
-  #     - http:
-  #         cors: true
-  #         method: POST
-  #         path: submit
-  #   handler: handler.submit
-  # teams:
-  #   events:
-  #     - http:
-  #         cors: true
-  #         method: GET
-  #         path: teams
-  #   handler: handler.teams
+  submit:
+    events:
+      - http:
+          cors: true
+          method: POST
+          path: submit
+    handler: handler.submit
+  teams:
+    events:
+      - http:
+          cors: true
+          method: GET
+          path: teams
+    handler: handler.teams
   test_email:
     handler: handler.test_email
-  # token:
-  #   events:
-  #     - http:
-  #         cors: true
-  #         method: POST
-  #         path: token
-  #   handler: handler.token
-  # token_refresh:
-  #   events:
-  #     - http:
-  #         cors: true
-  #         method: POST
-  #         path: token_refresh
-  #   handler: handler.token_refresh
+  token:
+    events:
+      - http:
+          cors: true
+          method: POST
+          path: token
+    handler: handler.token
+  token_refresh:
+    events:
+      - http:
+          cors: true
+          method: POST
+          path: token_refresh
+    handler: handler.token_refresh
   user_confirm:
     events:
       - http:

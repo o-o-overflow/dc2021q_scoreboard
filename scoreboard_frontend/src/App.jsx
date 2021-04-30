@@ -270,6 +270,7 @@ class App extends React.Component {
   render() {
     const solved = (this.state.solvesByTeam[this.state.team] || []).includes(this.state.showChallengeId);
     const tags = this.state.tagsByChallenge[this.state.showChallengeId] || EMPTY_SPLIT_TAGS;
+    const points = 666; // TODO make pointsByChallenge global and access it here?
     return (
       <>
         <Navbar
@@ -348,6 +349,7 @@ class App extends React.Component {
               }
               tags={tags}
               token={this.state.accessToken}
+              points={points}
             />
           </ReactModal>
         </main>

@@ -197,7 +197,7 @@ class ChallengeModal extends React.Component {
     const tagthingy = (<div className="tagthingy">{tag_spans}</div>);
 
     const my_emoji = special_attrs.get('emoji')
-    const my_points = "TODO";
+    const my_points = this.props.points;
     const emojispan = (<span className="emojifont">{`${my_emoji}`}</span>);
     const grantsline = (
         <div className="grantsline">
@@ -292,5 +292,6 @@ ChallengeModal.propTypes = exact({
   numSolved: PropTypes.number.isRequired,
   tags: PropTypes.array.isRequired,
   token: PropTypes.string.isRequired,
+  points: PropTypes.number.isRequired,
 });
 export default ChallengeModal;

@@ -38,13 +38,17 @@ function Rules() {
         algorithm can see how that affects the overall ranking.
           </p>
 
+      <h2>Challenge Release Schedule</h2>
+      <p>
+        We will release challenges throughout the competition as we see fit. We base these decisions on the flow of the game and the availability of the humans that wrote the challenge. We will not release any challenges less than 12 hours to the end of the competition. 
+      </p>
+
       <h2>Shortcut Solutions</h2>
       <p>
         We strive to develop challenges that stretch and test everyone's skills. We also test the challenges to ensure that there's ~one intended path/solution. 
       </p>
-
       <p>
-        Unfortunately, we are human and mistakes happen. Our policy will be: if we see that a challenge has been solved within two hours of launch by a "shortcut solution" (that we decide at our discretion), then we might release an updated version. If a shortcut solution is found after the two hours, then we will not release an updated version.
+        Unfortunately, we are human and mistakes happen. Our policy will be: if we see that a challenge has been solved within what we consider to be a short time from launch by a "shortcut solution", then we might release an updated version. 
       </p>
       <h2>Flag Format</h2>
       <p>

@@ -40,7 +40,7 @@ function Rules() {
 
       <h2>Challenge Release Schedule</h2>
       <p>
-        We will release challenges throughout the competition as we see fit. We base these decisions on the flow of the game and the availability of the humans that wrote the challenge. We will not release any challenges less than 12 hours to the end of the competition. 
+        We will release challenges throughout the competition as we see fit. We base these decisions on the flow of the game and the availability of the humans that wrote the challenge. We will not release any challenges less than 12 hours to the end of the competition (except for patches for shortcut solutions). 
       </p>
 
       <h2>Shortcut Solutions</h2>

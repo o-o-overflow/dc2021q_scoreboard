@@ -534,7 +534,7 @@ def user_confirm(data, stage):
         LOGGER.info("EMAIL: {}".format(email))
     body = (
         "Your registration to DEF CON CTF Quals is complete.\n\n"
-        "https://scoreboard.oooverflow.io/\n"
+        "https://scoreboard.ooo/\n"
     )
     send_email(
         "OOO Account Registration <accounts@oooverflow.io>",

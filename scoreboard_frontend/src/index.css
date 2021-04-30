@@ -140,6 +140,7 @@ span.tag-boxy-thing { /* from the archive */
     display: inline-block;
     margin-left: .5rem;
     font-family: conthraxsemibold, monospace;
+    margin-bottom: 1em;
 }
 
 .modal-body { overflow: auto; overflow-wrap: anywhere; }  /* these were already there */

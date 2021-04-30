@@ -156,6 +156,7 @@ table.table thead th { border-top: none; position: sticky; top: 0; }
 
 .sticky-left { position: sticky; left: 0; } /* Used in the solves table */
 td.solves-td-no { color: #666; }
+.solves-header-emoji { font-family: emoji,sans-serif; padding-right: 0.3rem; }
 .scoreboard-chal-span { padding-right: 1em; font-family: emoji,sans-serif; }
 
 

@@ -21,7 +21,7 @@ function Challenge(props) {
   }
   onClick = () => props.onClick(props);
 
-  const [normal_tags, special_attrs] = tags;  // TODO TODO TODO: this doesn't work, 'tags' not iterable
+  const [normal_tags, special_attrs] = tags;
 
   const [my_pos_top, my_pos_left] = get_chal_pos(special_attrs);
   let styles = { 'top': my_pos_top, 'left': my_pos_left };

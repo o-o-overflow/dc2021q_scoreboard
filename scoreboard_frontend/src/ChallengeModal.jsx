@@ -9,12 +9,12 @@ class ChallengeModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      alertCSS: "",
       buttonDisabled: false,
       description: "",
       flag: "",
       status: "",
     };
-    this.my_alert_div = React.createRef();
     this.countDown = null;
     this.hashTimestamp = null;
     this.timerID = null;
@@ -43,9 +43,7 @@ class ChallengeModal extends React.Component {
   controller = new AbortController();
 
   handleFlagChange = (event) => {
-    this.setState({ flag: event.target.value });  /* sets at every keypress instead of reading it on submission? */
-    this.my_alert_div.current.style.backgroundColor = ""; /* let's reset the alert colors */
-    this.my_alert_div.current.style.borderColor = "";
+    this.setState({ alertCSS: "", flag: event.target.value });
   };
 
   handleKeyPress = (event) => {
@@ -141,15 +139,10 @@ class ChallengeModal extends React.Component {
           buttonDisabled: false,
           status: body.message,  /* received from the server */
         });
-        let thealert = this.my_alert_div.current;
         if (body.message.includes("success!")) {
-            console.log("cool, valid flag!");
-            thealert.style.backgroundColor = "green";
-            thealert.style.borderColor = "green";
+          this.setState({ alertCSS: "alert-success" });
         } else if (body.message.includes("incorrect flag")) {
-            console.log("sorry, the server says that's not the right flag");
-            thealert.style.backgroundColor = "";
-            thealert.style.borderColor = "red";
+          this.setState({ alertCSS: "alert-danger" });
         }
       })
       .catch((error) => {
@@ -186,8 +179,14 @@ class ChallengeModal extends React.Component {
       ? "Please Wait"
       : "Send Flag";
     if (this.state.status !== "") {
+      let css;
+      if (this.state.alertCSS) {
+        css = `alert ${this.state.alertCSS}`;
+      } else {
+        css = "alert alert-secondary";
+      }
       status = (
-        <div className="alert alert-secondary" ref={this.my_alert_div}>Status: {this.state.status}</div>
+        <div className={css}>Status: {this.state.status}</div>
       );
     }
 

@@ -220,7 +220,7 @@ class App extends React.Component {
         solved: (solvesByTeam[this.state.team] || []).includes(id),
         tags,
       };
-      console.assert(category === "haiku");
+      console.assert(category === "haiku", category);
       if (category in challenges) {
         challenges[category].push(object);
       } else {

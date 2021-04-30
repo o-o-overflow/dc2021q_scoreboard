@@ -27,20 +27,15 @@ function random_map_pct(seed)
     const i = Math.floor(f*10);
     return 5 + i*9;
 }
-function get_chal_pos(id, item_index)
+function get_chal_pos(id, item_index, special_attrs)
 {
-    /* If we have a preference, use it */
-    //TODO special tags
-    //if (preset)
-    //    return preset;
-    /* Otherwise make one up, hoping it won't collide */
-    /* Doesn't work that well, we should try not to use it */
-    return [
-      '' + random_map_pct(item_index) + "%",
-      '' + random_map_pct(item_index+47) + "%"
-    ];
+    /* If we have a preference (from the author or the chalmanager), use it
+    * Otherwise make one up -- doesn't work that well, should be a fallback only */
+    let mtop = special_attrs.get('lat'), mleft = special_attrs.get('lon');
+    if (!mtop) mtop = random_map_pct(item_index);
+    if (!mleft) mleft = random_map_pct(item_index+47);
+    return [ '' + mtop + "%", '' + mleft + "%" ];
 }
-
 
 function Challenge(props) {
   const { authenticated, id, item_index, points, solved, tags } = props;
@@ -53,7 +48,29 @@ function Challenge(props) {
   }
   onClick = () => props.onClick(props);
 
-  const [my_pos_top, my_pos_left] = get_chal_pos(id, item_index);
+  const normal_tags = tags.split(",")
+    .map((tag, index) => { return tag.trim(); })
+    .filter((tag) => !tag.startsWith("--"));
+  const special_tags = tags.split(",")
+    .map((tag, index) => { return tag.trim(); })
+    .filter((tag) => tag.startsWith("--"));
+
+  // tag "--special-key-value" --> special_attrs[key] = value
+  // this is icky, but doesn't require changing the db
+  // or hardcoding things in javascript
+  const special_attrs = new Map();
+  for (let i = 0; i < special_tags.length; i++) {
+    const tag = special_tags[i];
+    console.assert(tag.startsWith("--special-"), tag);
+    const x = tag.replace("--special-",'').split('-')
+    console.assert(x.length === 2, x.length, x);
+    const key = x[0].trim(), val = x[1].trim();
+    console.assert(!special_attrs.has(key), key, special_attrs);
+    special_attrs.set(key, val);
+  }
+
+
+  const [my_pos_top, my_pos_left] = get_chal_pos(id, item_index, special_attrs);
   let styles = { 'top': my_pos_top, 'left': my_pos_left };
   const styles_chalname = { 'top': my_pos_top, 'left': my_pos_left };  /* will overlap, see padding and z-index */
 
@@ -67,13 +84,8 @@ function Challenge(props) {
     styles.backgroundImage = `url('/pics/radio_red.svg')`;
   }
 
-  const tag_names = tags.split(",")
-    .map((tag, index) => { return tag.trim(); })
-    .filter((tag) => !tag.startsWith("--"))
-    .join(' | ');
-
   let tooltip = "" + id + "\nCurrently " + points + " points"
-        + "\n" + tag_names;
+        + "\n" + normal_tags.join(' | ');
 
 
   // XXX: make div and position both inside it?

@@ -162,6 +162,8 @@ td.solves-td-no { color: #666; }
     background-color: var(--dc-red);  /* overridden in ChallengeModal if specific messages are received */
     border-color: var(--dc-red);
 }
+.modal-body .alert-success { background-color: green; border-color: green; }
+.modal-body .alert-danger { border-color: red; background-color: var(--dc-red); }
 
 
 .ReactModal__Overlay {

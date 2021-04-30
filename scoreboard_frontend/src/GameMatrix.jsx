@@ -18,11 +18,15 @@ class GameMatrix extends React.Component {
 
   header() {
     const theHeaders = this.challenges.map((id) => {
+      const n_solves = this.props.solvesByChallenge[id] || 0;
+      const points = this.props.pointsByChallenge[id];
+      const emoji = this.props.tagsByChallenge[id][1].get('emoji');
+      const tooltip = `${id} ${emoji}\n(solved by ${n_solves})\ncurrently ${points} points`;
       return (
-        <th key={id} scope="row" title={id}>
-          <span className="solves-header-emoji">{this.props.tagsByChallenge[id][1].get('emoji')}</span>
-          ({this.props.solvesByChallenge[id] || 0})<br/>
-          <span className="solves-header-points">{this.props.pointsByChallenge[id]}</span>
+        <th key={id} scope="row" title={tooltip}>
+          <span className="solves-header-emoji">{emoji}</span>
+          ({n_solves})<br/>
+          <span className="solves-header-points">{points}</span>
         </th>
       );
     });
@@ -33,7 +37,7 @@ class GameMatrix extends React.Component {
   solvedRow(solves, teamName) {
     return this.challenges.map((id) => {
       const solved = solves.has(id);
-      const tooltip = "" + teamName + " - " + id + " " + (solved ? "solved" : "unsolved");
+      const tooltip = "" + teamName + ": " + id + " is " + (solved ? "solved" : "unsolved");
       const cls = (solved ? "solves-td-yes" : "solves-td-no");
       return <td title={tooltip} key={id} className={cls}>{solved ? "Y" : "N"}</td>; /* TODO: emoji */
     });

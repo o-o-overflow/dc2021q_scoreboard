@@ -33,6 +33,7 @@ class App extends React.Component {
       lastSolveTimeByTeam: {},
       openedByCategory: {},
       solvesByChallenge: {},
+      pointsByChallenge: {},
       pointsByTeam: {},
       refreshToken:
         window.localStorage.getItem(LOCAL_STORAGE_REFRESH_TOKEN) || "",
@@ -258,6 +259,7 @@ class App extends React.Component {
     this.setState({
       challenges,
       lastSolveTimeByTeam,
+      pointsByChallenge,
       pointsByTeam,
       solvesByTeam,
       solvesByChallenge,
@@ -270,7 +272,7 @@ class App extends React.Component {
   render() {
     const solved = (this.state.solvesByTeam[this.state.team] || []).includes(this.state.showChallengeId);
     const tags = this.state.tagsByChallenge[this.state.showChallengeId] || EMPTY_SPLIT_TAGS;
-    const points = 666; // TODO make pointsByChallenge global and access it here?
+    const points = this.state.pointsByChallenge[this.state.showChallengeId] || 0;
     return (
       <>
         <Navbar

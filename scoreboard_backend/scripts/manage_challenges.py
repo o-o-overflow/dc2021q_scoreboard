@@ -54,6 +54,7 @@ class CommandHandler:
             "id": challenge["id"],
             "description": challenge["description"],
             "flag_hash": challenge["flag_hash"],
+            "tags": challenge["tags"],
         }
         return self._run_command("challenge_update", "-d", json.dumps(data))
 

@@ -123,7 +123,7 @@ def validate(validate_data=True, **validators):
             if data is None:
                 return api_response(422, "invalid request")
 
-            log_request(data)
+            log_request(data, event["requestContext"]["identity"]["sourceIp"])
 
             stage = event["requestContext"]["stage"]
 

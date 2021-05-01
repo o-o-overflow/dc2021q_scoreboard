@@ -5,6 +5,7 @@ import logging
 import os
 
 import boto3
+import jwt
 import psycopg2
 
 
@@ -32,10 +33,12 @@ def api_response(status_code=200, message=None, log_message=True):
     }
 
 
-def log_request(data):
+def log_request(data, ip):
     data = copy.deepcopy(data)
     if "password" in data and isinstance(data["password"], str):
         data["password"] = "<password len={}>".format(len(data["password"]))
+    user_id = jwt.decode(data["token"], options={"verify_signature": False})["user_id"]
+    LOGGER.info({"ip": ip, "user_id": user_id})
     LOGGER.info(data)
 
 

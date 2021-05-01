@@ -80,7 +80,7 @@ def challenge(data, _stage):
             result = cursor.fetchone()
     if not result:
         return api_response(404)
-    return api_response(200, result[0])
+    return api_response(200, result[0], log_message=False)
 
 
 def challenge_delete(event, _context):

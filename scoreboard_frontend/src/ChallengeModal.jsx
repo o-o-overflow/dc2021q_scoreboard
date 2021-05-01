@@ -203,7 +203,7 @@ class ChallengeModal extends React.Component {
         <div className="grantsline">
           {`This station grants`}
           {emojispan}
-          {`and currently ${my_points} points`}
+          {`and is currently ${my_points} points`}
         </div>);
 
     let form_submission = "";

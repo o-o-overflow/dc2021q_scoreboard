@@ -7,7 +7,7 @@ class GameMatrix extends React.Component {
     return this.props.teamScoreboardOrder.map((team) => {
       return (
         <tr key={team.name}>
-          <td className="sticky-left" key={team.name}>
+          <td className="teamname-td" key={team.name}>
             {team.name}
           </td>
           {this.solvedRow(new Set(team.solves), team.name)}
@@ -22,13 +22,16 @@ class GameMatrix extends React.Component {
       const points = this.props.pointsByChallenge[id];
       const emoji = this.props.tagsByChallenge[id][1].get('emoji');
       const tooltip = `${id} ${emoji}\n(solved by ${n_solves})\ncurrently ${points} points`;
-      const solves_str = "\u00A0(" + n_solves + ")";
+      //const solves_str = "\u00A0(" + n_solves + ")";
       return (
         <th key={id} scope="row" title={tooltip}>
-          <span className="solves-header-emoji">{emoji}</span>{solves_str}<br/>
-          <span className="solves-header-points">{points}</span>
+          <span className="solves-header-emoji">{emoji}</span>
         </th>
       );
+        /* removed:
+          {solves_str}<br/>
+          <span className="solves-header-points">{points}</span>
+        */
     });
 
     return theHeaders;

@@ -47,7 +47,7 @@ function Scoreboard(props) {
     <tr key={team.name} id={team.name}>
       <td>{team.num}</td>
       <td>{team.points}</td>
-      <td>{ctfTimeLink(team.name)}</td>
+      <td className="teamname-td">{ctfTimeLink(team.name)}</td>
       <td>{team.solves}</td>
     </tr>
   ));

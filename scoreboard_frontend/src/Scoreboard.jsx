@@ -73,10 +73,10 @@ function Scoreboard(props) {
       <table className="table table-hover table-sm">
         <thead>
           <tr>
-            <th scope="col">Place</th>
-            <th scope="col">Points</th>
-            <th scope="col">Team {teamLink}</th>
-            <th scope="col">Completed</th>
+            <th className="scoreboard-th" scope="col">Place</th>
+            <th className="scoreboard-th" scope="col">Points</th>
+            <th className="scoreboard-th" scope="col">Team {teamLink}</th>
+            <th className="scoreboard-th" scope="col">Completed</th>
           </tr>
         </thead>
         <tbody>{teamRows}</tbody>

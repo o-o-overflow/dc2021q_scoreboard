@@ -161,6 +161,8 @@ td.teamname-td { max-width: 15em; text-overflow: ellipsis; white-space: nowrap; 
 .solves-header-points { color: #888; }
 .scoreboard-chal-span { padding-right: 1em; font-family: emoji,sans-serif; }
 
+th.scoreboard-th { background-color: var(--map-bg); vertical-align: middle !important; }
+
 
 .alert-secondary {  /* Computing, sent, etc. */
     color: white;

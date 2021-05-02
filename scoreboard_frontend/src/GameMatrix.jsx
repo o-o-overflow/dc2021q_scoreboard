@@ -24,7 +24,7 @@ class GameMatrix extends React.Component {
       const tooltip = `${id} ${emoji}\n(solved by ${n_solves})\ncurrently ${points} points`;
       const solves_str = "\u00A0(" + n_solves + ")";
       return (
-        <th key={id} scope="row" title={tooltip}>
+        <th key={id} scope="row" title={tooltip} className="scoreboard-th">
           <span className="solves-header-emoji">{emoji}</span>{solves_str}<br/>
           <span className="solves-header-points">{points}</span>
         </th>
@@ -58,7 +58,7 @@ class GameMatrix extends React.Component {
         <table className="table table-hover table-sm">
           <thead>
             <tr>
-              <th className="sticky-left" scope="column">
+              <th className="sticky-left scoreboard-th" scope="column">
                 Team
               </th>
               {this.header()}

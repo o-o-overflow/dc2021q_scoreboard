@@ -69,7 +69,7 @@ function Scoreboard(props) {
   ) : null;
 
   return (
-    <div className="table-responsive">
+    <div className="table-scoreboard">
       <table className="table table-hover table-sm">
         <thead>
           <tr>

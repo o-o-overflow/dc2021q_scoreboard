@@ -7,7 +7,7 @@ class GameMatrix extends React.Component {
     return this.props.teamScoreboardOrder.map((team) => {
       return (
         <tr key={team.name}>
-          <td className="sticky-left" key={team.name}>
+          <td className="teamname-td" key={team.name}>
             {team.name}
           </td>
           {this.solvedRow(new Set(team.solves), team.name)}

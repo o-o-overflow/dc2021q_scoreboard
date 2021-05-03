@@ -11,15 +11,11 @@ import { get_chal_pos } from "./utils.js";
 
 
 function Challenge(props) {
-  const { authenticated, id, /*item_index,*/ points, solved, tags } = props;
+  const { id, points, solved, tags } = props;
 
-  let onClick = null;
+  const onClick = () => props.onClick(props);
   let classes = "challenge";
   let classes_chalname = "chalname";
-  if (authenticated) {
-    classes += " challenge-authenticated";
-  }
-  onClick = () => props.onClick(props);
 
   const [normal_tags, special_attrs] = tags;
 
@@ -58,9 +54,7 @@ function Challenge(props) {
   );
 }
 Challenge.propTypes = exact({
-  authenticated: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
-  //item_index: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
   points: PropTypes.number.isRequired,
   solved: PropTypes.bool.isRequired,

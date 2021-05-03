@@ -64,7 +64,7 @@ class ChallengeModal extends React.Component {
       });
       this.worker.postMessage({
         prefix: "f00f",
-        value: `${this.props.challengeId}!${this.state.flag}!${this.props.token}!${this.hashTimestamp}`,
+        value: `${this.props.challengeId}!${this.state.flag}!${this.hashTimestamp}`,
       });
       return;
     }
@@ -74,18 +74,14 @@ class ChallengeModal extends React.Component {
   loadData = () => {
     this.setState({ description: "Loading..." });
     fetch(
-      `${process.env.REACT_APP_BACKEND_URL}/challenge/${this.props.challengeId}/${this.props.token}`,
+      `${process.env.REACT_APP_BACKEND_URL}/challenge/${this.props.challengeId}`,
       { method: "GET", signal: this.controller.signal }
     )
       .then((response) =>
         response.json().then((body) => ({ body, status: response.status }))
       )
       .then(({ body, status }) => {
-        if (status === 401) {
-          this.setState({ description: "Refreshing authentication token..." });
-          this.props.onTokenExpired(this.loadData);
-          return;
-        } else if (status !== 200) {
+        if (status !== 200) {
           console.log(status);
           console.log(body.message);
           return;
@@ -110,7 +106,6 @@ class ChallengeModal extends React.Component {
       flag: this.state.flag,
       nonce,
       timestamp: this.hashTimestamp,
-      token: this.props.token,
     };
     this.setState({ status: "submitting flag" });
     fetch(`${process.env.REACT_APP_BACKEND_URL}/submit`, {
@@ -287,11 +282,9 @@ ChallengeModal.propTypes = exact({
   challengeId: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   onSolve: PropTypes.func.isRequired,
-  onTokenExpired: PropTypes.func.isRequired,
   solved: PropTypes.bool.isRequired,
   numSolved: PropTypes.number.isRequired,
   tags: PropTypes.array.isRequired,
-  token: PropTypes.string.isRequired,
   points: PropTypes.number.isRequired,
 });
 export default ChallengeModal;

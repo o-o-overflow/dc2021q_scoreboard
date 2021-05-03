@@ -278,13 +278,13 @@ resource "aws_db_instance" "scoreboard" {
   db_subnet_group_name        = aws_db_subnet_group.group.id
   deletion_protection         = true
   engine                      = "postgres"
-  engine_version              = "10.15" #13.1"
+  engine_version              = "13.1"
   identifier                  = "sb-${var.environment}"
   instance_class              = var.db_instance_class
   multi_az                    = true
   name                        = "scoreboard_${var.environment}"
   password                    = var.db_password
-  skip_final_snapshot         = false
+  skip_final_snapshot         = true
   storage_type                = "gp2"
   tags                        = { Name = "scoreboard-${var.environment}" }
   username                    = "scoreboard"

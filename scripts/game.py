@@ -10,7 +10,7 @@ from botocore.config import Config
 
 DB_HOST = "sb-{environment}.cgrvtkkg9riu.us-east-2.rds.amazonaws.com"
 ENVIRONMENT = "production"
-START_TIME = datetime.datetime(2020, 5, 16, 0, 0, 0, tzinfo=datetime.timezone.utc)
+START_TIME = datetime.datetime(2021, 5, 1, 0, 0, 0, tzinfo=datetime.timezone.utc)
 
 
 def get_db_password():
@@ -24,33 +24,34 @@ def main(argv):
     with psql_connection() as psql:
         if len(argv) == 1:
             stats(psql)
+        elif argv[1] == "cat":
+            categories(psql)
         elif argv[1] == "timeline":
             timeline(psql)
         elif argv[1] == "solcount":
             solcount(psql)
         elif argv[1] == "challs":
             challs_table(psql)
+        elif argv[1] == "graph":
+            graph(psql)
         elif argv[1] == "teams":
             teams_table(psql)
         elif argv[1] == "cinfo":
             if len(argv) != 3:
                 print("You need to specify one challenge id")
                 sys.exit(1)
-                info_chall(psql, argv[2])
+            info_chall(psql, argv[2])
         elif argv[1] == "log":
             if len(argv) < 3:
                 n = 30
             else:
                 n = int(argv[2])
-                log(psql, n)
+            log(psql, n)
         elif argv[1] == "tinfo":
             if len(argv) != 3:
                 print("You need to specify one team id")
                 sys.exit(1)
-                info_team(psql, argv[2])
-        #    elif argv[1] == "teacheck":
-        #        with psql_connection(db_password) as psql:
-        #            teacheck(psql)
+            info_team(psql, argv[2])
         elif argv[1] == "blood":
             blood(psql)
         else:
@@ -85,6 +86,10 @@ def main(argv):
             )
             print(" %s blood               \x1b[33m# First blood \x1b[0m" % argv[0])
             print(" %s solcount            \x1b[33m# Solutions count \x1b[0m" % argv[0])
+            print(
+                " %s cat                 \x1b[33m# List chaallenges by category \x1b[0m"
+                % argv[0]
+            )
             print("")
             sys.exit(0)
 
@@ -136,7 +141,7 @@ def log(psql, maxn):
             elif challs[chall] <= maxn:
                 print(
                     "%s | %s solved %s (solved %d times)"
-                    % (time, team, chall, challs[chall])
+                    % (time.strftime("%b-%d %H:%M:%S"), team, chall, challs[chall])
                 )
             if challs[chall] == maxn:
                 print(
@@ -161,7 +166,7 @@ def log(psql, maxn):
                 elif challs[chall] <= maxn:
                     print(
                         "%s | %s solved %s (solved %d times)"
-                        % (time, team, chall, challs[chall])
+                        % (time.strftime("%b-%d %H:%M:%S"), team, chall, challs[chall])
                     )
                 if challs[chall] == maxn:
                     print(
@@ -254,6 +259,116 @@ def timeline(psql):
             print(" %2d      %5s          %5s" % (i, slots[i][0], len(slots[i][1])))
 
 
+def graph(psql):
+    print("")
+    now = datetime.datetime.now(datetime.timezone.utc)
+    diff = now - START_TIME
+    now_pos = int((diff.seconds // 60) / 30)
+    print("                          |%s> now" % ("-" * now_pos))
+    with psql.cursor() as cursor:
+        cursor.execute("SELECT id from challenges;")
+        for (name,) in cursor.fetchall():
+            with psql.cursor() as cursor2:
+                cursor2.execute(
+                    "SELECT solves.date_created FROM solves WHERE challenge_id=%s limit 10;",
+                    (name,),
+                )
+                when = cursor2.fetchall()
+                first_blood = -1
+                ten_solved = -1
+                if when:
+                    first = when[0][0]
+                    diff = first - START_TIME
+                    first_blood = int((diff.seconds // 60) / 30)
+                    if len(when) > 9:
+                        last = when[-1][0]
+                        diff = last - START_TIME
+                        ten_solved = int((diff.seconds // 60) / 30)
+            with psql.cursor() as cursor2:
+                cursor2.execute(
+                    "SELECT date_created FROM challenges WHERE id=%s;", (name,)
+                )
+                opentime = cursor2.fetchone()[0]
+                diff = opentime - START_TIME
+                opentime = int((diff.seconds // 60) / 30)
+
+            if opentime > 0:
+                gap = " " * (opentime - 1)
+            else:
+                gap = ""
+
+            if first_blood == -1:
+                print(
+                    "\x1b[33m%25s\x1b[0m |%s\x1b[32m[%s\x1b[0m"
+                    % (name, gap, "~" * (now_pos - opentime))
+                )
+            else:
+                if first_blood == opentime:
+                    if ten_solved >= 0:
+                        print(
+                            "\x1b[33m%25s\x1b[0m |%s\x1b[31mX%s]\x1b[0m"
+                            % (name, gap, "=" * (ten_solved - opentime))
+                        )
+                    else:
+                        print(
+                            "\x1b[33m%25s\x1b[0m |%s\x1b[31mX%s\x1b[0m"
+                            % (name, gap, "=" * (now_pos - opentime))
+                        )
+                else:
+                    if ten_solved >= 0:
+                        print(
+                            "\x1b[33m%25s\x1b[0m |%s\x1b[32m[%s\x1b[31mX%s]\x1b[0m"
+                            % (
+                                name,
+                                gap,
+                                "~" * (first_blood - opentime),
+                                "=" * (ten_solved - first_blood),
+                            )
+                        )
+                    else:
+                        print(
+                            "\x1b[33m%25s\x1b[0m |%s\x1b[32m[%s\x1b[31mX%s\x1b[0m"
+                            % (
+                                name,
+                                gap,
+                                "~" * (first_blood - opentime),
+                                "=" * (now_pos - opentime),
+                            )
+                        )
+
+    print("")
+
+
+def categories(psql):
+    print("")
+    print("\x1b[32m           Name            : Categories\x1b[0m")
+    print(
+        "\x1b[32m-----------------------------------------------------------------\x1b[0m"
+    )
+    cats_count = {}
+    with psql.cursor() as cursor:
+        cursor.execute("SELECT id from challenges order by date_created;")
+        for (name,) in cursor.fetchall():
+            with psql.cursor() as cursor2:
+                cursor2.execute("SELECT * FROM challenges WHERE id=%s;", (name,))
+                cat = [
+                    n.strip()
+                    for n in cursor2.fetchone()[-1].split(",")
+                    if not n.strip().startswith("-")
+                ]
+                for c in cat:
+                    if c not in cats_count:
+                        cats_count[c] = 0
+                    cats_count[c] += 1
+                print("\x1b[33m%25s\x1b[0m  :  %s" % (name, ", ".join(cat)))
+    print(
+        "\x1b[32m-----------------------------------------------------------------\x1b[0m"
+    )
+    for c in cats_count:
+        print("                        %2d - \x1b[33m%s\x1b[0m" % (cats_count[c], c))
+    print("")
+
+
 def info_chall(psql, chall):
     now = datetime.datetime.now(datetime.timezone.utc)
     with psql.cursor() as cursor2:
@@ -303,6 +418,7 @@ def info_chall(psql, chall):
             print("\x1b[32m Wrong Flag Submitted:\x1b[0m %d" % len(errors))
             print("\x1b[32m Last 20 wrong submissions:\x1b[0m")
             for when, team, flag in errors[-20:][::-1]:
+                # for when, team, flag in errors[::-1]:
                 diff = now - when
                 when = diff_string(diff)
                 print("      '%s' from %s, %s ago" % (flag, team, when))
@@ -320,7 +436,7 @@ def challs_table(psql):
     )
     now = datetime.datetime.now(datetime.timezone.utc)
     with psql.cursor() as cursor:
-        cursor.execute("SELECT id from challenges;")
+        cursor.execute("SELECT id from challenges order by date_created;")
         for (name,) in cursor.fetchall():
             with psql.cursor() as cursor2:
                 cursor2.execute(
@@ -390,18 +506,6 @@ def blood(psql):
                     print(
                         "\x1b[32m %30s \x1b[0m %s in %s" % (name, solvedby[0][1], when)
                     )
-
-
-# def teacheck(psql):
-#    with psql.cursor() as cursor:
-#        # cursor.execute('SELECT id,team_name FROM users;')
-#        # for (team_id,team_name) in cursor.fetchall():
-#        #    print ('ID: %s, team: %s' % (team_id, team_name))
-#        cursor.execute(
-#            "SELECT date_created, user_id, challenge_id, flag FROM submissions WHERE challenge_id='throwback' and user_id=177;"
-#        )
-#        for (date_created, user_id, challenge_id, flag) in cursor.fetchall():
-#            print('Time: %s, flag: "%s"' % (date_created, flag))
 
 
 def stats(psql):

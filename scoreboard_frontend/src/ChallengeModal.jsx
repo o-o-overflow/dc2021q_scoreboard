@@ -10,20 +10,18 @@ class ChallengeModal extends React.Component {
     super(props);
     this.state = {
       alertCSS: "",
-      buttonDisabled: false,
       description: "",
       flag: "",
       status: "",
     };
-    this.countDown = null;
-    this.hashTimestamp = null;
-    this.timerID = null;
     this.worker = new Worker("worker.js");
     this.worker.onmessage = (message) => {
       if (message.data.complete) {
-        this.submit(message.data.nonce);
-      } else {
-        this.setState((state, props) => ({ status: `${state.status} .` }));
+        const status =
+          message.data.digest === this.state.flagHash
+            ? "success!"
+            : "incorrect flag";
+        this.setState({ status });
       }
     };
   }
@@ -33,42 +31,25 @@ class ChallengeModal extends React.Component {
   }
 
   componentWillUnmount() {
-    this.controller.abort();
     this.worker.terminate();
-    if (this.timerID !== null) {
-      clearInterval(this.timerID);
-    }
   }
-
-  controller = new AbortController();
 
   handleFlagChange = (event) => {
     this.setState({ alertCSS: "", flag: event.target.value });
   };
 
   handleKeyPress = (event) => {
-    if (!this.state.buttonDisabled && event.key === "Enter") {
+    if (event.key === "Enter") {
       this.handleSubmit();
     }
   };
 
   handleSubmit = () => {
-    let validation;
     if (this.state.flag.length < 1 || this.state.flag.length > 160) {
-      validation = "invalid flag";
+      this.setState({ status: "invalid flag" });
     } else {
-      this.hashTimestamp = parseInt(Date.now() / 1000, 10);
-      this.setState({
-        buttonDisabled: true,
-        status: "computing proof of work",
-      });
-      this.worker.postMessage({
-        prefix: "f00f",
-        value: `${this.props.challengeId}!${this.state.flag}!${this.hashTimestamp}`,
-      });
-      return;
+      this.worker.postMessage(this.state.flag);
     }
-    this.setState({ status: validation });
   };
 
   loadData = () => {
@@ -90,88 +71,13 @@ class ChallengeModal extends React.Component {
         const description = converter.makeHtml(
           body[this.props.challengeId]["description"]
         ); /* html from chalmanager */
-        this.setState({ description });
-      })
-      .catch((error) => {
-        if (error.name !== "AbortError") {
-          console.log(error);
-        }
+        const flagHash = body[this.props.challengeId]["flag_hash"];
+        this.setState({ description, flagHash });
       });
   };
-
-  submit = (nonce) => {
-    const requestData = {
-      challenge_id: this.props.challengeId,
-      flag: this.state.flag,
-      nonce,
-      timestamp: this.hashTimestamp,
-    };
-    this.setState({ status: "submitting flag" });
-    fetch(`${process.env.REACT_APP_BACKEND_URL}/submit`, {
-      body: JSON.stringify(requestData),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-      signal: this.controller.signal,
-    })
-      .then((response) =>
-        response.json().then((body) => ({ body, status: response.status }))
-      )
-      .then(({ body, status }) => {
-        if (status === 201) {
-          this.props.onSolve();
-        } else if (status === 401) {
-          this.setState({ status: "refreshing authentication token" });
-          this.props.onTokenExpired(this.handleSubmit);
-          return;
-        } else if (status === 429) {
-          this.countDown = Math.ceil(body.message.seconds) + 1;
-          this.tick();
-          this.timerID = setInterval(() => this.tick(), 1000);
-          return;
-        }
-        this.setState({
-          buttonDisabled: false,
-          status: body.message,  /* received from the server */
-        });
-        if (body.message.includes("success!")) {
-          this.setState({ alertCSS: "alert-success" });
-        } else if (body.message.includes("incorrect flag")) {
-          this.setState({ alertCSS: "alert-danger" });
-        }
-      })
-      .catch((error) => {
-        if (error.name !== "AbortError") {
-          this.setState({
-            buttonDisabled: false,
-            status: "(error) see console for info",
-          });
-          console.log(error);
-        }
-      });
-  };
-
-  tick() {
-    this.countDown -= 1;
-    if (this.countDown <= 0) {
-      clearInterval(this.timerID);
-      this.countDown = null;
-      this.timerID = null;
-      this.setState({
-        buttonDisabled: false,
-        status: "Okay, you may try again now.",
-      });
-      return;
-    }
-    const plural = this.countDown === 1 ? "" : "s";
-    const status = `You are submitting too frequently. Try again in ${this.countDown} second${plural}.`;
-    this.setState({ status });
-  }
 
   render() {
     let status; /* magic name or something? */
-    const buttonText = this.state.buttonDisabled
-      ? "Please Wait"
-      : "Send Flag";
     if (this.state.status !== "") {
       let css;
       if (this.state.alertCSS) {
@@ -214,16 +120,14 @@ class ChallengeModal extends React.Component {
             placeholder="flag (format: OOO{…})"
             onChange={this.handleFlagChange}
             onKeyPress={this.handleKeyPress}
-            readOnly={this.state.buttonDisabled}
             type="text"
             value={this.state.flag}
           />
           <input
             className="btn btn-primary"
-            disabled={this.state.buttonDisabled}
             onClick={this.handleSubmit}
             type="button"
-            value={buttonText}
+            value="Submit Flag"
           />
         </>
       );

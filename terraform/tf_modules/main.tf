@@ -17,6 +17,17 @@ data "archive_file" "auth" {
   type        = "zip"
 }
 
+data "aws_ami" "amazon-linux-2" {
+  most_recent = true
+  owners = ["amazon"]
+
+
+ filter {
+   name   = "name"
+   values = ["amzn2-ami-hvm*"]
+ }
+}
+
 data "aws_acm_certificate" "register" {
   domain   = "register.oooverflow.io"
   provider = aws.us-east-1
@@ -322,7 +333,7 @@ resource "aws_iam_role_policy_attachment" "util-access" {
 }
 
 resource "aws_instance" "util" {
-  ami                         = "ami-0b59bfac6be064b78"
+  ami                         = data.aws_ami.amazon-linux-2.id
   associate_public_ip_address = true
   availability_zone           = "us-east-2a"
   depends_on                  = [aws_internet_gateway.gateway]

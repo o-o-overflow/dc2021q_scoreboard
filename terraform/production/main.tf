@@ -3,7 +3,7 @@ variable "jwt_secret" {}
 
 module processor {
   aws_nat_gateways  = 2
-  db_instance_class = "db.t3.micro" # "db.m6g.large"
+  db_instance_class = "db.t3.large"
   db_password       = var.db_password
   environment       = "production"
   jwt_secret        = var.jwt_secret

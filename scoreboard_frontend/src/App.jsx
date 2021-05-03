@@ -7,7 +7,6 @@ import GameMatrix from "./GameMatrix";
 import Navbar from "./Navbar";
 import Rules from "./Rules";
 import Scoreboard from "./Scoreboard";
-import CtfTimeScoreboard from "./CtfTimeScoreboard";
 
 import { split_normal_and_special_tags, EMPTY_SPLIT_TAGS } from "./utils.js";
 
@@ -233,20 +232,6 @@ class App extends React.Component {
                 teamScoreboardOrder={this.state.teamScoreboardOrder}
                 tagsByChallenge={this.state.tagsByChallenge}
                 pointsByChallenge={this.state.pointsByChallenge}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/scoreboard-ctftime"
-            render={() => (
-              <CtfTimeScoreboard
-                categoryByChallenge={this.categoryByChallenge}
-                lastSolveTimeByTeam={this.state.lastSolveTimeByTeam}
-                pointsByTeam={this.state.pointsByTeam}
-                solvesByTeam={this.state.solvesByTeam}
-                teamScoreboardOrder={this.state.teamScoreboardOrder}
-                team={this.state.team}
               />
             )}
           />

@@ -14,11 +14,11 @@ def date_format(item):
 
 
 PERIOD = 60
-START_TIME = {60: datetime(2020, 5, 1), 300: datetime(2020, 1, 1)}
+START_TIME = {60: datetime(2021, 4, 29), 300: datetime(2021, 1, 1)}
 
 
 def build_metric_id(metric):
-    parts = [metric["Namespace"].replace("/", "_"), metric["MetricName"]]
+    parts = [metric["Namespace"].replace("/", "_"), metric["MetricName"].replace("%", "_")]
     for dimension in metric["Dimensions"]:
         parts.append(
             dimension["Value"].replace("-", "_").replace(".", "_").replace(":", "_")
@@ -57,7 +57,7 @@ def main():
     next_token = None
     while next_token != False:
         kwargs = {
-            "EndTime": datetime(2020, 5, 18),
+            "EndTime": datetime(2021, 5, 3),
             "MaxDatapoints": 100800,
             "MetricDataQueries": metrics,
             "StartTime": START_TIME[PERIOD],
@@ -71,7 +71,7 @@ def main():
         assert response["ResponseMetadata"]["HTTPStatusCode"] == 200
         next_token = response.get("NextToken", False)
 
-        print(f"Results: {len(response['MetricDataResults'])}")
+        print(f"Results: {len(response['MetricDataResults'])} {next_token}")
         for i, data in enumerate(response["MetricDataResults"]):
             if data["StatusCode"] not in {"Complete", "PartialData"}:
                 print(data["StatusCode"])
